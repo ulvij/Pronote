@@ -2,6 +2,7 @@ package com.ulvijabbarli.pronote.di.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.ulvijabbarli.pronote.di.PerActivity
 import com.ulvijabbarli.pronote.di.ViewModelKey
 import com.ulvijabbarli.pronote.ui.main.MainViewModel
 import dagger.Binds
@@ -11,6 +12,7 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class MainViewModelsModule {
 
+    @PerActivity
     @Binds
     @IntoMap
     @ViewModelKey(MainViewModel::class)

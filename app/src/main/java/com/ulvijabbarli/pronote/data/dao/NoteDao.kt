@@ -16,10 +16,10 @@ interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(note: Note)
 
-    @Query("SELECT * FROM NOTE_TABLE WHERE ID= id")
+    @Query("SELECT * FROM NOTE_TABLE WHERE id = :id")
     fun getNote(id:Long):LiveData<Note>
 
-    @Query("DELETE FROM NOTE_TABLE WHERE ID = id")
+    @Query("DELETE FROM NOTE_TABLE WHERE id = :id")
     fun deleteNote(id: Long)
 
     @Query("DELETE FROM NOTE_TABLE")
