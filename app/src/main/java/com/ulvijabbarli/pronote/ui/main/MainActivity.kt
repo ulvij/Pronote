@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.ulvijabbarli.pronote.BaseActivity
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.viewmodel.ViewModelProviderFactory
+import org.json.JSONObject
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
-    lateinit var mainViewModel:MainViewModel
+    lateinit var mainViewModel: MainViewModel
 
     @Inject
     lateinit var providerFactory: ViewModelProviderFactory
@@ -19,6 +20,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mainViewModel = ViewModelProviders.of(this,providerFactory).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 }

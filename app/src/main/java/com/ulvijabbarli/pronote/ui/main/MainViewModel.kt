@@ -1,7 +1,6 @@
 package com.ulvijabbarli.pronote.ui.main
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.ulvijabbarli.pronote.data.model.Note
@@ -22,9 +21,5 @@ class MainViewModel @Inject constructor() : ViewModel() {
         )
     }
 
-
-//    fun observeNotes(): LiveData<MainResource<List<Note>>> {
-//
-//    }
 
 }

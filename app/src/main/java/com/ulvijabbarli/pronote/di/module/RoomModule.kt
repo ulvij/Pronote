@@ -1,4 +1,4 @@
-package com.ulvijabbarli.pronote.di
+package com.ulvijabbarli.pronote.di.module
 
 import android.content.Context
 import androidx.room.Room
@@ -15,10 +15,11 @@ class RoomModule {
     @Provides
     fun getDatabase(context: Context): AppDatabase {
         return Room.databaseBuilder(
-            context.applicationContext,
-            AppDatabase::class.java,
-            AppDatabase.DATABASE_NAME
-        ).build()
+                context.applicationContext,
+                AppDatabase::class.java,
+                AppDatabase.DATABASE_NAME
+            ).fallbackToDestructiveMigration()
+            .build()
     }
 
     @Singleton
