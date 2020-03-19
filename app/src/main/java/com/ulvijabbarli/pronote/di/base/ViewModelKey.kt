@@ -1,4 +1,4 @@
-package com.ulvijabbarli.pronote.di
+package com.ulvijabbarli.pronote.di.base
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

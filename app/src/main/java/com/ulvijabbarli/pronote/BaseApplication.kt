@@ -1,6 +1,6 @@
 package com.ulvijabbarli.pronote
 
-import com.ulvijabbarli.pronote.di.DaggerAppComponent
+import com.ulvijabbarli.pronote.di.base.component.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 

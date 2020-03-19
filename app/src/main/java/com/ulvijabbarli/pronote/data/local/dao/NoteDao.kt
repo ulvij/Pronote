@@ -1,4 +1,4 @@
-package com.ulvijabbarli.pronote.data.dao
+package com.ulvijabbarli.pronote.data.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

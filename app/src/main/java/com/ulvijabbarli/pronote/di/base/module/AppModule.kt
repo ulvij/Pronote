@@ -1,4 +1,4 @@
-package com.ulvijabbarli.pronote.di.module
+package com.ulvijabbarli.pronote.di.base.module
 
 import android.app.Application
 import com.bumptech.glide.Glide
@@ -28,6 +28,12 @@ class AppModule {
     @Singleton
     fun provideGson(): Gson {
         return GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+    }
+
+    @Singleton
+    @Provides
+    fun providePreferences(){
+
     }
 
 }
