@@ -1,9 +1,9 @@
-package com.ulvijabbarli.pronote.di.module
+package com.ulvijabbarli.pronote.di.base.module
 
 import android.content.Context
 import androidx.room.Room
-import com.ulvijabbarli.pronote.data.dao.NoteDao
-import com.ulvijabbarli.pronote.data.db.AppDatabase
+import com.ulvijabbarli.pronote.data.local.dao.NoteDao
+import com.ulvijabbarli.pronote.data.local.db.AppDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

@@ -1,8 +1,8 @@
-package com.ulvijabbarli.pronote.data.db
+package com.ulvijabbarli.pronote.data.local.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.ulvijabbarli.pronote.data.dao.NoteDao
+import com.ulvijabbarli.pronote.data.local.dao.NoteDao
 import com.ulvijabbarli.pronote.data.model.Note
 
 @Database(entities = [Note::class], version = AppDatabase.DATABASE_VERSION, exportSchema = false)

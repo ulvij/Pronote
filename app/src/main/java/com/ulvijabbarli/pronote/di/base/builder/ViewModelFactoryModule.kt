@@ -1,4 +1,4 @@
-package com.ulvijabbarli.pronote.di.builder
+package com.ulvijabbarli.pronote.di.base.builder
 
 import androidx.lifecycle.ViewModelProvider
 import com.ulvijabbarli.pronote.viewmodel.ViewModelProviderFactory
