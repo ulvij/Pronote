@@ -1,18 +1,18 @@
 package com.ulvijabbarli.pronote.data.local.db
 
-import androidx.lifecycle.LiveData
 import com.ulvijabbarli.pronote.data.model.Note
+import io.reactivex.rxjava3.core.Observable
 
 interface DbHelper {
 
-    fun getAllNote(): LiveData<MutableList<Note>>
+    fun getAllNote(): Observable<MutableList<Note>>
 
-    fun getNote(id:Long):LiveData<Note>
+    fun getNote(id: Long): Observable<Note>
 
-    fun insertNote(note:Note):LiveData<Boolean>
+    fun insertNote(note: Note): Observable<Boolean>
 
-    fun deleteNote(id:Long):LiveData<Boolean>
+    fun deleteNote(id: Long): Observable<Boolean>
 
-    fun deleteAllNote():LiveData<Boolean>
+    fun deleteAllNote(): Observable<Boolean>
 
 }
