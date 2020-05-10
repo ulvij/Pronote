@@ -1,30 +1,30 @@
-package com.ulvijabbarli.pronote.ui.main
+package com.ulvijabbarli.pronote.ui.main.notes
 
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.ulvijabbarli.pronote.data.DataHelper
 import com.ulvijabbarli.pronote.data.model.Note
+import com.ulvijabbarli.pronote.ui.main.MainResource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class NotesViewModel @Inject constructor(
     var dataHelper: DataHelper
 ) : ViewModel() {
-
     var notes: MediatorLiveData<MainResource<List<Note>>> = MediatorLiveData()
     var notesCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     companion object {
-        val TAG = MainViewModel::class.qualifiedName
+        val TAG = NotesViewModel::class.qualifiedName
     }
 
     init {
         Log.e(
             TAG,
-            "Main view model is working"
+            "Notes view model is working"
         )
     }
 
@@ -45,4 +45,5 @@ class MainViewModel @Inject constructor(
                 ))
         }
     }
+
 }

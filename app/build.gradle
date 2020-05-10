@@ -66,6 +66,7 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    implementation "androidx.room:room-rxjava2:$rootProject.roomVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
@@ -75,7 +76,7 @@ dependencies {
 
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
-    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.archLifecycleVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidxArchVersion"
 
     // ViewModel Kotlin support
@@ -93,12 +94,12 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     // RxJava
-    def rx_java_version = '3.0.0'
-    implementation "io.reactivex.rxjava3:rxjava:$rx_java_version"
+    def rx_java_version = '2.1.9'
+    implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
 
     // RxAndroid
-    def rx_android_version = '3.0.0'
-    implementation "io.reactivex.rxjava3:rxandroid:$rx_android_version"
+    def rx_android_version = '2.0.2'
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
 
 
     // Rx-Retrofit Call Adapter
