@@ -4,6 +4,7 @@ import android.content.Context
 import com.ulvijabbarli.pronote.data.local.db.DbHelper
 import com.ulvijabbarli.pronote.data.local.prefs.PreferencesManager
 import com.ulvijabbarli.pronote.data.model.Note
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,15 +36,15 @@ class DataManager @Inject constructor(
         return dbHelper.getNote(id)
     }
 
-    override fun insertNote(note: Note): Flowable<Boolean> {
+    override fun insertNote(note: Note): Completable {
         return dbHelper.insertNote(note)
     }
 
-    override fun deleteNote(id: Long): Flowable<Boolean> {
+    override fun deleteNote(id: Long): Completable {
         return dbHelper.deleteNote(id)
     }
 
-    override fun deleteAllNote(): Flowable<Boolean> {
+    override fun deleteAllNote(): Completable {
         return dbHelper.deleteAllNote()
     }
 }

@@ -16,7 +16,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
     }
 
     fun startTiming(openApp: () -> Unit) {
-        object : CountDownTimer(3000, 1000) {
+        object : CountDownTimer(1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
 
             }

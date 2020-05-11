@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.ulvijabbarli.pronote.data.model.Note
+import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
@@ -14,14 +15,14 @@ interface NoteDao {
     fun getAllNote(): Flowable<MutableList<Note>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(note: Note)
+    fun insert(note: Note): Completable
 
     @Query("SELECT * FROM NOTE_TABLE WHERE id = :id")
     fun getNote(id: Long): Flowable<Note>
 
     @Query("DELETE FROM NOTE_TABLE WHERE id = :id")
-    fun deleteNote(id: Long)
+    fun deleteNote(id: Long): Completable
 
     @Query("DELETE FROM NOTE_TABLE")
-    fun deleteAll()
+    fun deleteAll(): Completable
 }

@@ -24,10 +24,7 @@ class AddNoteViewModel @Inject constructor(
     }
 
     init {
-        Log.e(
-            TAG,
-            "Notes view model is working"
-        )
+        Log.e(TAG,"Notes view model is working")
     }
 
     override fun onCleared() {
@@ -39,7 +36,7 @@ class AddNoteViewModel @Inject constructor(
         liveNote.value = MainResource.Loading()
         val note = Note(title = title, description = description)
         val validation = note.isValid()
-
+        Log.e("LOG_NOTE-->",validation.second?:"SALAM")
         // check validation of fields
         if (!validation.first) {
             liveNote.value =
@@ -52,8 +49,8 @@ class AddNoteViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { result ->
-                    liveNote.value = MainResource.Success(result)
+                {
+                    liveNote.value = MainResource.Success(true)
                 },
                 { error ->
                     liveNote.value =

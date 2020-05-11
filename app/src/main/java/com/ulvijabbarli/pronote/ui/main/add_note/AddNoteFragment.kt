@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
+import com.google.android.material.snackbar.Snackbar
 
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.ui.main.MainResource
@@ -69,6 +71,7 @@ class AddNoteFragment : DaggerFragment() {
                             Log.d(TAG, "onChanged: LOADING...")
                         }
                         is MainResource.Error -> {
+                            Toast.makeText(requireContext(),noteResource.message?:"ERROR",Toast.LENGTH_LONG).show()
                             Log.d(TAG, "onChanged: ERROR... ${noteResource.message}")
                         }
                         is MainResource.Success -> {
@@ -78,6 +81,19 @@ class AddNoteFragment : DaggerFragment() {
                 }
             })
     }
+
+    private fun showError(message:String){
+
+    }
+
+    private fun showLoading(){
+
+    }
+
+    private fun handleSuccess(){
+
+    }
+
 
 
 }

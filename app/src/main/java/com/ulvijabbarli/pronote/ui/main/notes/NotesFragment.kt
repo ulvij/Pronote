@@ -57,7 +57,7 @@ class NotesFragment : DaggerFragment() {
                             Log.d(TAG, "onChanged: ERROR... ${noteResource.message}")
                         }
                         is MainResource.Success -> {
-                            Log.d(TAG, "onChanged: SUCCESS...")
+                            Log.d(TAG, "onChanged: SUCCESS...${noteResource.data}")
                         }
                     }
                 }

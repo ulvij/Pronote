@@ -14,14 +14,20 @@ data class Note(
 ) {
 
     fun isValid(): Pair<Boolean, String?> {
-        if (title != null && description != null) return Pair(true, null)
         val messages = arrayListOf<String>()
         when {
-            title == null -> messages.add("Please add title")
-            description == null -> messages.add("Please add description")
+            title.isNullOrEmpty() -> messages.add("Please add title")
+            description.isNullOrEmpty() -> messages.add("Please add description")
         }
 
-        return Pair(false, messages.joinToString { "\n" })
+        println(messages.toString())
+        val fullMessage = messages.joinToString { "\n" }
+
+        println(fullMessage)
+        return if (fullMessage.isEmpty())
+            Pair(true, null)
+        else
+            Pair(false, fullMessage)
     }
 
 
