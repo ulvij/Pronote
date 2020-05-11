@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ulvijabbarli.pronote.di.base.ViewModelKeyJava
 import com.ulvijabbarli.pronote.ui.main.MainViewModel
+import com.ulvijabbarli.pronote.ui.main.add_note.AddNoteViewModel
 import com.ulvijabbarli.pronote.ui.main.notes.NotesViewModel
 import com.ulvijabbarli.pronote.viewmodel.ViewModelProviderFactory
 import dagger.Binds
@@ -22,6 +23,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKeyJava(NotesViewModel::class)
     internal abstract fun bindNotesViewModel(notesViewModel: NotesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKeyJava(AddNoteViewModel::class)
+    internal abstract fun bindAddNoteViewModel(addNoteViewModel: AddNoteViewModel): ViewModel
 
     @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelProviderFactory): ViewModelProvider.Factory

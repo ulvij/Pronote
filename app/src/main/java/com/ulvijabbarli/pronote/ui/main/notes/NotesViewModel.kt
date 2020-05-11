@@ -28,6 +28,11 @@ class NotesViewModel @Inject constructor(
         )
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        notesCompositeDisposable.dispose()
+    }
+
 
     fun loadNoteList() {
         if (notes.value == null) {

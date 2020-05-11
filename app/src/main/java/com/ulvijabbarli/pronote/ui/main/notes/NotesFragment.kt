@@ -23,9 +23,8 @@ class NotesFragment : DaggerFragment() {
     lateinit var notesViewModel: NotesViewModel
 
     companion object {
-        val TAG = NotesFragment::class.qualifiedName ?: "NotesFragment"
+        val TAG = NotesFragment::class.java.name
     }
-
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
