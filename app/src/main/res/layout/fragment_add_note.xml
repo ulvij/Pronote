@@ -2,12 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout_add_note"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/constraint_layout_add_note"
     android:padding="10dp"
     tools:context=".ui.main.add_note.AddNoteFragment">
-
 
     <ImageView
         android:id="@+id/image_back"
@@ -36,10 +35,12 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_title"
-            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/note_title_hint"
+            android:inputType="text"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
             android:textSize="26sp" />
@@ -48,8 +49,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
-        android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_title">
@@ -60,7 +61,7 @@
             android:layout_height="wrap_content"
             android:gravity="top"
             android:hint="@string/note_description_hint"
-            android:maxLines="5"
+            android:maxLines="7"
             android:minLines="5"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
@@ -68,5 +69,16 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminateOnly="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

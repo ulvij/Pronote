@@ -36,7 +36,7 @@ class AddNoteViewModel @Inject constructor(
         liveNote.value = MainResource.Loading()
         val note = Note(title = title, description = description)
         val validation = note.isValid()
-        Log.e("LOG_NOTE-->",validation.second?:"SALAM")
+        Log.e("LOG_NOTE-->","Desc-->${description}, TITLE-->${title}")
         // check validation of fields
         if (!validation.first) {
             liveNote.value =

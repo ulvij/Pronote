@@ -68,13 +68,17 @@ class AddNoteFragment : DaggerFragment() {
                 if (noteResource != null) {
                     when (noteResource) {
                         is MainResource.Loading -> {
+                            controlLoading(true)
                             Log.d(TAG, "onChanged: LOADING...")
                         }
                         is MainResource.Error -> {
-                            Toast.makeText(requireContext(),noteResource.message?:"ERROR",Toast.LENGTH_LONG).show()
+                            controlLoading(false)
+                            showError(noteResource.message)
                             Log.d(TAG, "onChanged: ERROR... ${noteResource.message}")
                         }
                         is MainResource.Success -> {
+                            controlLoading(false)
+                            handleSuccess()
                             Log.d(TAG, "onChanged: SUCCESS...")
                         }
                     }
@@ -82,18 +86,22 @@ class AddNoteFragment : DaggerFragment() {
             })
     }
 
-    private fun showError(message:String){
-
+    private fun controlLoading(show: Boolean) {
+        progressbar.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 
-    private fun showLoading(){
-
+    private fun showError(message: String?) {
+        message?.let { error ->
+            view?.let { v ->
+                Snackbar.make(v, error, 2000).show()
+            } ?: Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
+        }
     }
 
-    private fun handleSuccess(){
-
+    private fun handleSuccess() {
+        Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG).show()
+        navController.popBackStack()
     }
-
 
 
 }
