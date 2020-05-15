@@ -1,18 +1,22 @@
 package com.ulvijabbarli.pronote.ui.main.notes
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-
+import com.google.android.material.snackbar.Snackbar
 import com.ulvijabbarli.pronote.R
+import com.ulvijabbarli.pronote.data.model.Note
 import com.ulvijabbarli.pronote.ui.main.MainResource
 import com.ulvijabbarli.pronote.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_notes.*
 import javax.inject.Inject
 
 /**
@@ -22,12 +26,15 @@ class NotesFragment : DaggerFragment() {
 
     lateinit var notesViewModel: NotesViewModel
 
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var notesAdapter: NotesAdapter
+
     companion object {
         val TAG = NotesFragment::class.java.name
     }
-
-    @Inject
-    lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +49,8 @@ class NotesFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         notesViewModel =
             ViewModelProviders.of(this, viewModelProviderFactory).get(NotesViewModel::class.java)
+        recycler_view_notes.adapter = notesAdapter
+        image_clear_all.setOnClickListener { showAreYouSureToClearAllDialog() }
         getNoteList()
     }
 
@@ -51,12 +60,17 @@ class NotesFragment : DaggerFragment() {
                 if (noteResource != null) {
                     when (noteResource) {
                         is MainResource.Loading -> {
+                            configureLoading(true)
                             Log.d(TAG, "onChanged: LOADING...")
                         }
                         is MainResource.Error -> {
+                            configureLoading(false)
+                            showError(noteResource.message)
                             Log.d(TAG, "onChanged: ERROR... ${noteResource.message}")
                         }
                         is MainResource.Success -> {
+                            configureLoading(false)
+                            handleData(noteResource.data)
                             Log.d(TAG, "onChanged: SUCCESS...${noteResource.data}")
                         }
                     }
@@ -65,4 +79,61 @@ class NotesFragment : DaggerFragment() {
         notesViewModel.loadNoteList()
     }
 
+    private fun configureLoading(show: Boolean) {
+        progress_bar_notes.visibility = if (show) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun showError(message: String?) {
+        message?.let { error ->
+            view?.let { v ->
+                Snackbar.make(v, error, 2000).show()
+            } ?: Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun handleData(notes: List<Note>?) {
+        notesAdapter.updateDataSet(notes ?: emptyList())
+
+        if (notesAdapter.itemCount == 0) {
+            recycler_view_notes.visibility = View.INVISIBLE
+            linear_empty.visibility = View.VISIBLE
+        } else {
+            recycler_view_notes.visibility = View.VISIBLE
+            linear_empty.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showAreYouSureToClearAllDialog() {
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.title_warning))
+            .setMessage(getString(R.string.message_are_you_sure_to_clear_all_notes))
+            .setPositiveButton(getString(R.string.action_yes)) { dialog, _ ->
+                dialog.dismiss()
+                clearAllNotes()
+            }
+            .setNegativeButton(getString(R.string.action_no)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun clearAllNotes() {
+        notesViewModel.clearAllNotes.observe(viewLifecycleOwner,
+            Observer { clearNotesResponse ->
+                if (clearNotesResponse != null) {
+                    when (clearNotesResponse) {
+                        is MainResource.Loading -> {
+                            configureLoading(true)
+                        }
+                        is MainResource.Error -> {
+                            showError(clearNotesResponse.message)
+                            configureLoading(false)
+                        }
+                        is MainResource.Success -> configureLoading(false)
+                    }
+                }
+            }
+        )
+        notesViewModel.clearAllNotes()
+    }
 }

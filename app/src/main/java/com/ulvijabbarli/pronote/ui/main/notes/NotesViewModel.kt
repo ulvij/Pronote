@@ -15,6 +15,7 @@ class NotesViewModel @Inject constructor(
     var dataHelper: DataHelper
 ) : ViewModel() {
     var notes: MediatorLiveData<MainResource<List<Note>>> = MediatorLiveData()
+    var clearAllNotes:MediatorLiveData<MainResource<Boolean>> = MediatorLiveData()
     var notesCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     companion object {
@@ -49,6 +50,23 @@ class NotesViewModel @Inject constructor(
                     }
                 ))
         }
+    }
+
+    fun clearAllNotes() {
+        clearAllNotes.value = MainResource.Loading()
+        notesCompositeDisposable.add(
+            dataHelper.deleteAllNote()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                      clearAllNotes.value = MainResource.Success(true)
+                    },
+                    { error ->
+                        clearAllNotes.value = MainResource.Error(error.message?:"Error while clearing all notes")
+                    }
+                )
+        )
     }
 
 }

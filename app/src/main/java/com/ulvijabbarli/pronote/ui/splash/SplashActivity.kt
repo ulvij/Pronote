@@ -16,6 +16,9 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         splashViewModel = ViewModelProvider(this).get(SplashViewModel::class.java)
-        splashViewModel.startTiming { startActivity(Intent(this, MainActivity::class.java)) }
+        splashViewModel.startTiming {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 }

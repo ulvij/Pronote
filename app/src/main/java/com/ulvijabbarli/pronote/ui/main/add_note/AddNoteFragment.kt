@@ -2,20 +2,19 @@ package com.ulvijabbarli.pronote.ui.main.add_note
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
-
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.ui.main.MainResource
+import com.ulvijabbarli.pronote.util.hideKeyboard
 import com.ulvijabbarli.pronote.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_add_note.*
@@ -55,6 +54,7 @@ class AddNoteFragment : DaggerFragment() {
     private fun initListeners() {
         image_back.setOnClickListener { navController.popBackStack() }
         image_save.setOnClickListener {
+            hideKeyboard()
             addNoteViewModel.insertNote(
                 text_title.text.toString(),
                 text_content.text.toString()
@@ -93,13 +93,13 @@ class AddNoteFragment : DaggerFragment() {
     private fun showError(message: String?) {
         message?.let { error ->
             view?.let { v ->
-                Snackbar.make(v, error, 2000).show()
+                Snackbar.make(v, error, 3000).show()
             } ?: Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
         }
     }
 
     private fun handleSuccess() {
-        Toast.makeText(requireContext(), "Successfully created!", Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), getString(R.string.message_note_created), Toast.LENGTH_SHORT).show()
         navController.popBackStack()
     }
 
