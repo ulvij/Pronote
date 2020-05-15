@@ -10,6 +10,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.ulvijabbarli.pronote.data.DataHelper
 import com.ulvijabbarli.pronote.data.DataManager
+import com.ulvijabbarli.pronote.data.local.db.DbHelper
+import com.ulvijabbarli.pronote.data.local.db.DbManager
 import com.ulvijabbarli.pronote.data.local.prefs.PreferencesHelper
 import com.ulvijabbarli.pronote.data.local.prefs.PreferencesManager
 import com.ulvijabbarli.pronote.util.Constants
@@ -20,6 +22,44 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
+
+    @Provides
+    @Singleton
+    fun provideDataHelper(dataManager: DataManager): DataHelper {
+        return dataManager
+    }
+
+    @Provides
+    @Singleton
+    fun provideDbHelper(dbManager: DbManager): DbHelper {
+        return dbManager
+    }
+
+    @Provides
+    @Singleton
+    fun provideContext(application: Application): Context {
+        return application
+    }
+
+
+    @Provides
+    @Singleton
+    fun providePreferencesHelper(preferencesManager: PreferencesManager): PreferencesHelper {
+        return preferencesManager
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(context: Context, prefName: String): SharedPreferences {
+        return context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferenceName(): String {
+        return PreferencesManager.PREF_NAME
+    }
+
 
     @Singleton
     @Provides
@@ -36,39 +76,6 @@ class AppModule {
     fun provideGson(): Gson {
         return GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
     }
-
-    @Provides
-    @Singleton
-    fun provideContext(application: Application):Context{
-        return application
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideDataHelper(dataManager:DataManager):DataHelper{
-        return dataManager
-    }
-
-
-    @Provides
-    @Singleton
-    fun providePreferencesHelper(preferencesManager:PreferencesManager):PreferencesHelper{
-        return preferencesManager
-    }
-
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(context:Context,prefName:String): SharedPreferences {
-        return context.getSharedPreferences(prefName,Context.MODE_PRIVATE)
-    }
-
-    @Provides
-    @Singleton
-    fun providePreferenceName():String{
-        return PreferencesManager.PREF_NAME
-    }
-
 
 
 }

@@ -5,7 +5,7 @@ import com.ulvijabbarli.pronote.BaseApplication
 import com.ulvijabbarli.pronote.di.base.builder.ActivityBuildersModule
 import com.ulvijabbarli.pronote.di.base.module.AppModule
 import com.ulvijabbarli.pronote.di.base.module.RoomModule
-import com.ulvijabbarli.pronote.di.base.builder.ViewModelFactoryModule
+import com.ulvijabbarli.pronote.di.base.builder.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -17,7 +17,7 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         ActivityBuildersModule::class,
-        ViewModelFactoryModule::class,
+        ViewModelModule::class,
         AppModule::class,
         RoomModule::class
     ]

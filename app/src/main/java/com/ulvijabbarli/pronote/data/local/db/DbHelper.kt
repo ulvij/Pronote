@@ -1,18 +1,19 @@
 package com.ulvijabbarli.pronote.data.local.db
 
 import com.ulvijabbarli.pronote.data.model.Note
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.Completable
+import io.reactivex.Flowable
 
 interface DbHelper {
 
-    fun getAllNote(): Observable<MutableList<Note>>
+    fun getAllNote(): Flowable<MutableList<Note>>
 
-    fun getNote(id: Long): Observable<Note>
+    fun getNote(id: Long): Flowable<Note>
 
-    fun insertNote(note: Note): Observable<Boolean>
+    fun insertNote(note: Note): Completable
 
-    fun deleteNote(id: Long): Observable<Boolean>
+    fun deleteNote(id: Long): Completable
 
-    fun deleteAllNote(): Observable<Boolean>
+    fun deleteAllNote(): Completable
 
 }
