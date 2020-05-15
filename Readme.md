@@ -21,8 +21,10 @@ Min API level is set to [21](https://android-arsenal.com/api?level=21#l21), so t
 - Tech-stack
     * [Kotlin](https://kotlinlang.org/)
     * [Dagger](https://dagger.dev/) - dependency injection
+    * [RxJava](https://github.com/ReactiveX/RxJava)-[RxAndroid](https://github.com/ReactiveX/RxAndroid) - deal with reactive use cases
     * [Retrofit](https://square.github.io/retrofit/) - networking
     * [Android Jetpack](https://developer.android.com/jetpack)
+        * [Room](https://developer.android.com/topic/libraries/architecture/room) - keep entire data inside the application
         * [Navigation](https://developer.android.com/topic/libraries/architecture/navigation/) - deal with whole in-app navigation
         * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - notify views about database change
         * [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle) - perform an action when lifecycle state changes
