@@ -1,13 +1,13 @@
 package com.ulvijabbarli.pronote.ui.main
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.local.prefs.PreferencesHelper
 import com.ulvijabbarli.pronote.ui.base.BaseActivity
+import com.ulvijabbarli.pronote.util.hideKeyboard
 import com.ulvijabbarli.pronote.viewmodel.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -31,6 +31,7 @@ class MainActivity : BaseActivity() {
             ViewModelProviders.of(this, viewModelProviderFactory).get(MainViewModel::class.java)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            hideKeyboard()
             if (destination.id == R.id.addNoteFragment) {
                 float_add_note.hide()
             } else {

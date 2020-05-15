@@ -8,15 +8,16 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.DataHelper
 import com.ulvijabbarli.pronote.data.DataManager
 import com.ulvijabbarli.pronote.data.local.db.DbHelper
 import com.ulvijabbarli.pronote.data.local.db.DbManager
 import com.ulvijabbarli.pronote.data.local.prefs.PreferencesHelper
 import com.ulvijabbarli.pronote.data.local.prefs.PreferencesManager
-import com.ulvijabbarli.pronote.util.Constants
 import dagger.Module
 import dagger.Provides
+import kotlinx.android.synthetic.main.item_note_list.view.*
 import javax.inject.Singleton
 
 
@@ -60,15 +61,22 @@ class AppModule {
         return PreferencesManager.PREF_NAME
     }
 
+    @Singleton
+    @Provides
+    fun provideRequestOptions(): RequestOptions {
+        return RequestOptions
+            .placeholderOf(R.drawable.ic_image_note)
+            .error(R.drawable.ic_error)
+    }
 
     @Singleton
     @Provides
     fun provideGlideInstance(
-        application: Application?,
-        requestOptions: RequestOptions?
-    ): RequestManager? {
-        return Glide.with(application!!)
-            .setDefaultRequestOptions(requestOptions!!)
+        application: Application,
+        requestOptions: RequestOptions
+    ): RequestManager {
+        return Glide.with(application)
+            .setDefaultRequestOptions(requestOptions)
     }
 
     @Provides

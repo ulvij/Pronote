@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.ui.main.MainResource
+import com.ulvijabbarli.pronote.util.hideKeyboard
 import com.ulvijabbarli.pronote.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_add_note.*
@@ -55,6 +56,7 @@ class AddNoteFragment : DaggerFragment() {
     private fun initListeners() {
         image_back.setOnClickListener { navController.popBackStack() }
         image_save.setOnClickListener {
+            hideKeyboard()
             addNoteViewModel.insertNote(
                 text_title.text.toString(),
                 text_content.text.toString()

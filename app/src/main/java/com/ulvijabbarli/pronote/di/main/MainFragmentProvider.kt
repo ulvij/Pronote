@@ -2,13 +2,14 @@ package com.ulvijabbarli.pronote.di.main
 
 import com.ulvijabbarli.pronote.ui.main.add_note.AddNoteFragment
 import com.ulvijabbarli.pronote.ui.main.notes.NotesFragment
+import com.ulvijabbarli.pronote.ui.main.notes.NotesModul
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class MainFragmentProvider {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [NotesModul::class])
     abstract fun provideNotesFragmentFactory(): NotesFragment
 
     @ContributesAndroidInjector
