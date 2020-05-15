@@ -105,13 +105,13 @@ class NotesFragment : DaggerFragment() {
 
     private fun showAreYouSureToClearAllDialog() {
         AlertDialog.Builder(context)
-            .setTitle("Warning!")
-            .setMessage("Are you sure to clear all all notes?")
-            .setPositiveButton("Yes") { dialog, _ ->
+            .setTitle(getString(R.string.title_warning))
+            .setMessage(getString(R.string.message_are_you_sure_to_clear_all_notes))
+            .setPositiveButton(getString(R.string.action_yes)) { dialog, _ ->
                 dialog.dismiss()
                 clearAllNotes()
             }
-            .setNegativeButton("No") { dialog, _ ->
+            .setNegativeButton(getString(R.string.action_no)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
