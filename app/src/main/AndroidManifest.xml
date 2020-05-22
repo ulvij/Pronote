@@ -20,7 +20,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".ui.main.MainActivity" />
     </application>
 
 </manifest>
