@@ -63,8 +63,11 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     // Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.13'
-    // Optional -- Robolectric environment
-    testImplementation 'androidx.test:core:1.2.0'
+    // Robolectric environment
+    // AndroidX Test - JVM testing
+    testImplementation "androidx.test.ext:junit-ktx:$rootProject.androidXTestExtKotlinRunnerVersion"
+    testImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
+    testImplementation "org.robolectric:robolectric:$rootProject.robolectricVersion"
     // Optional -- Mockito framework
     testImplementation 'org.mockito:mockito-core:2.19.0'
     // Truth

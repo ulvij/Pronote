@@ -44,4 +44,10 @@ ext {
     rxcalladapter_version = '2.5.0'
     reactivestreams_version = "1.1.1"
     nav_version = "2.3.0-beta01"
+
+    // testing
+    androidXTestExtKotlinRunnerVersion = '1.1.1'
+    androidXTestCoreVersion = '1.2.0'
+    robolectricVersion = '4.3.1'
+
 }
