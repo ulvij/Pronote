@@ -10,14 +10,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DataManager @Inject constructor(
+class DefaultNoteRepository @Inject constructor(
     var prefHelper: PreferencesManager,
     var dbHelper: DbHelper,
     var context: Context
-) : DataHelper {
+) : NoteRepository {
 
     companion object {
-        val TAG = DataHelper::class.qualifiedName
+        val TAG = DefaultNoteRepository::class.qualifiedName
     }
 
     override fun setAccessToken(token: String) {

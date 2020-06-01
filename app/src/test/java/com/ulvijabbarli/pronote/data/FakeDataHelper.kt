@@ -1,14 +1,11 @@
-package com.ulvijabbarli.pronote.data.local.db
+package com.ulvijabbarli.pronote.data
 
-import com.ulvijabbarli.pronote.data.NoteRepository
 import com.ulvijabbarli.pronote.data.model.Note
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class DbManager @Inject constructor(var appDatabase: AppDatabase) : NoteRepository {
+class FakeDataHelper: DataHelper{
+
 
     override fun setAccessToken(token: String) {
         TODO("Not yet implemented")
@@ -19,23 +16,23 @@ class DbManager @Inject constructor(var appDatabase: AppDatabase) : NoteReposito
     }
 
     override fun getAllNote(): Flowable<MutableList<Note>> {
-        return appDatabase.noteDao().getAllNote()
+        TODO("Not yet implemented")
     }
 
     override fun getNote(id: Long): Flowable<Note> {
-        return appDatabase.noteDao().getNote(id)
+        TODO("Not yet implemented")
     }
 
     override fun insertNote(note: Note): Completable {
-        return appDatabase.noteDao().insert(note)
+        TODO("Not yet implemented")
     }
 
     override fun deleteNote(id: Long): Completable {
-        return appDatabase.noteDao().deleteNote(id)
+        TODO("Not yet implemented")
     }
 
     override fun deleteAllNote(): Completable {
-        return appDatabase.noteDao().deleteAll()
+        TODO("Not yet implemented")
     }
 
 }

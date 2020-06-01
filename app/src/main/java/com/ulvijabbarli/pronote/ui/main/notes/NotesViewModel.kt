@@ -3,7 +3,7 @@ package com.ulvijabbarli.pronote.ui.main.notes
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.ulvijabbarli.pronote.data.DataHelper
+import com.ulvijabbarli.pronote.data.NoteRepository
 import com.ulvijabbarli.pronote.data.model.Note
 import com.ulvijabbarli.pronote.ui.main.MainResource
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(
-    var dataHelper: DataHelper
+    var repository: NoteRepository
 ) : ViewModel() {
     var notes: MediatorLiveData<MainResource<List<Note>>> = MediatorLiveData()
     var clearAllNotes:MediatorLiveData<MainResource<Boolean>> = MediatorLiveData()
@@ -38,7 +38,7 @@ class NotesViewModel @Inject constructor(
     fun loadNoteList() {
         if (notes.value == null) {
             notes.value = MainResource.Loading()
-            notesCompositeDisposable.add(dataHelper.getAllNote()
+            notesCompositeDisposable.add(repository.getAllNote()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -55,7 +55,7 @@ class NotesViewModel @Inject constructor(
     fun clearAllNotes() {
         clearAllNotes.value = MainResource.Loading()
         notesCompositeDisposable.add(
-            dataHelper.deleteAllNote()
+            repository.deleteAllNote()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     app:cardCornerRadius="10dp"
+    android:theme="@style/Theme.MaterialComponents.DayNight"
     app:cardBackgroundColor="@color/colorAppBackground"
     app:cardElevation="6dp"
     app:cardUseCompatPadding="true">
