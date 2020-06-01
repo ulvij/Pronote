@@ -3,7 +3,7 @@ package com.ulvijabbarli.pronote.ui.main.add_note
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.ulvijabbarli.pronote.data.DataHelper
+import com.ulvijabbarli.pronote.data.NoteRepository
 import com.ulvijabbarli.pronote.data.model.Note
 import com.ulvijabbarli.pronote.ui.main.MainResource
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class AddNoteViewModel @Inject constructor(
-    var dataHelper: DataHelper
+    var repository: NoteRepository
 ) : ViewModel() {
 
     var liveNote: MediatorLiveData<MainResource<Boolean>> = MediatorLiveData()
@@ -45,7 +45,7 @@ class AddNoteViewModel @Inject constructor(
         }
 
         // after validation
-        insertNoteCompositeDisposable.add(dataHelper.insertNote(note)
+        insertNoteCompositeDisposable.add(repository.insertNote(note)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

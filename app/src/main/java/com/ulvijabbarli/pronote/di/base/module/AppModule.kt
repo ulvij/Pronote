@@ -9,15 +9,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.ulvijabbarli.pronote.R
-import com.ulvijabbarli.pronote.data.DataHelper
-import com.ulvijabbarli.pronote.data.DataManager
+import com.ulvijabbarli.pronote.data.DefaultNoteRepository
+import com.ulvijabbarli.pronote.data.NoteRepository
 import com.ulvijabbarli.pronote.data.local.db.DbHelper
 import com.ulvijabbarli.pronote.data.local.db.DbManager
 import com.ulvijabbarli.pronote.data.local.prefs.PreferencesHelper
 import com.ulvijabbarli.pronote.data.local.prefs.PreferencesManager
 import dagger.Module
 import dagger.Provides
-import kotlinx.android.synthetic.main.item_note_list.view.*
 import javax.inject.Singleton
 
 
@@ -26,8 +25,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideDataHelper(dataManager: DataManager): DataHelper {
-        return dataManager
+    fun provideRepository(defaultNoteRepository: DefaultNoteRepository): NoteRepository {
+        return defaultNoteRepository
     }
 
     @Provides
@@ -41,7 +40,6 @@ class AppModule {
     fun provideContext(application: Application): Context {
         return application
     }
-
 
     @Provides
     @Singleton
