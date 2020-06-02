@@ -3,9 +3,9 @@ package com.ulvijabbarli.pronote.di.base.component
 import android.app.Application
 import com.ulvijabbarli.pronote.BaseApplication
 import com.ulvijabbarli.pronote.di.base.builder.ActivityBuildersModule
+import com.ulvijabbarli.pronote.di.base.builder.ViewModelModule
 import com.ulvijabbarli.pronote.di.base.module.AppModule
 import com.ulvijabbarli.pronote.di.base.module.RoomModule
-import com.ulvijabbarli.pronote.di.base.builder.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector

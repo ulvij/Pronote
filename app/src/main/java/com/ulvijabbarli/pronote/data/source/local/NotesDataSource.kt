@@ -1,18 +1,10 @@
-package com.ulvijabbarli.pronote.data
+package com.ulvijabbarli.pronote.data.source.local
 
-import com.ulvijabbarli.pronote.data.model.Note
+import com.ulvijabbarli.pronote.data.Note
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
-
-/**
- * Interface to the data layer.
- */
-interface NoteRepository {
-
-    fun setAccessToken(token:String)
-
-    fun getAccessToken():String?
+interface NotesDataSource {
 
     fun getAllNote(): Flowable<MutableList<Note>>
 

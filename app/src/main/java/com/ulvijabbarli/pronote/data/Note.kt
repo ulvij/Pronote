@@ -1,9 +1,7 @@
-package com.ulvijabbarli.pronote.data.model
+package com.ulvijabbarli.pronote.data
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import java.io.Serializable
 
 @Entity(tableName = "note_table")
 data class Note(

@@ -1,4 +1,4 @@
-package com.ulvijabbarli.pronote.ui.main.add_note
+package com.ulvijabbarli.pronote.ui.main.add_edit_note
 
 import android.os.Bundle
 import android.util.Log
@@ -13,9 +13,9 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.ulvijabbarli.pronote.R
-import com.ulvijabbarli.pronote.ui.main.MainResource
+import com.ulvijabbarli.pronote.data.Resource
 import com.ulvijabbarli.pronote.util.hideKeyboard
-import com.ulvijabbarli.pronote.viewmodel.ViewModelProviderFactory
+import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_add_note.*
 import javax.inject.Inject
@@ -23,15 +23,15 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass.
  */
-class AddNoteFragment : DaggerFragment() {
+class AddEditNoteFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelProvider: ViewModelProviderFactory
     lateinit var navController: NavController
-    lateinit var addNoteViewModel: AddNoteViewModel
+    lateinit var addEditNoteViewModel: AddEditNoteViewModel
 
     companion object {
-        val TAG: String = AddNoteFragment::class.java.name
+        val TAG: String = AddEditNoteFragment::class.java.name
     }
 
     override fun onCreateView(
@@ -44,9 +44,9 @@ class AddNoteFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController(view)
-        addNoteViewModel = ViewModelProviders
+        addEditNoteViewModel = ViewModelProviders
             .of(this, viewModelProvider)
-            .get(AddNoteViewModel::class.java)
+            .get(AddEditNoteViewModel::class.java)
         initListeners()
         bindObservers()
     }
@@ -55,7 +55,7 @@ class AddNoteFragment : DaggerFragment() {
         image_back.setOnClickListener { navController.popBackStack() }
         image_save.setOnClickListener {
             hideKeyboard()
-            addNoteViewModel.insertNote(
+            addEditNoteViewModel.insertNote(
                 text_title.text.toString(),
                 text_content.text.toString()
             )
@@ -63,20 +63,20 @@ class AddNoteFragment : DaggerFragment() {
     }
 
     private fun bindObservers() {
-        addNoteViewModel.liveNote
+        addEditNoteViewModel.liveNote
             .observe(viewLifecycleOwner, Observer { noteResource ->
                 if (noteResource != null) {
                     when (noteResource) {
-                        is MainResource.Loading -> {
+                        is Resource.Loading -> {
                             controlLoading(true)
                             Log.d(TAG, "onChanged: LOADING...")
                         }
-                        is MainResource.Error -> {
+                        is Resource.Error -> {
                             controlLoading(false)
-                            showError(noteResource.message)
-                            Log.d(TAG, "onChanged: ERROR... ${noteResource.message}")
+                            showError(noteResource.exception.message)
+                            Log.d(TAG, "onChanged: ERROR... ${noteResource.exception.message}")
                         }
-                        is MainResource.Success -> {
+                        is Resource.Success -> {
                             controlLoading(false)
                             handleSuccess()
                             Log.d(TAG, "onChanged: SUCCESS...")

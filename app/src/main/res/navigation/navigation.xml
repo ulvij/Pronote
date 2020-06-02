@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/addNoteFragment"
-        android:name="com.ulvijabbarli.pronote.ui.main.add_note.AddNoteFragment"
+        android:name="com.ulvijabbarli.pronote.ui.main.add_edit_note.AddEditNoteFragment"
         android:label="fragment_add_note"
         tools:layout="@layout/fragment_add_note" />
 

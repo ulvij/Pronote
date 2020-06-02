@@ -3,9 +3,9 @@ package com.ulvijabbarli.pronote.ui.main.notes
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.ulvijabbarli.pronote.data.NoteRepository
-import com.ulvijabbarli.pronote.data.model.Note
-import com.ulvijabbarli.pronote.ui.main.MainResource
+import com.ulvijabbarli.pronote.data.Note
+import com.ulvijabbarli.pronote.data.Resource
+import com.ulvijabbarli.pronote.data.source.NoteRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -14,8 +14,8 @@ import javax.inject.Inject
 class NotesViewModel @Inject constructor(
     var repository: NoteRepository
 ) : ViewModel() {
-    var notes: MediatorLiveData<MainResource<List<Note>>> = MediatorLiveData()
-    var clearAllNotes:MediatorLiveData<MainResource<Boolean>> = MediatorLiveData()
+    var notes: MediatorLiveData<Resource<List<Note>>> = MediatorLiveData()
+    var clearAllNotes:MediatorLiveData<Resource<Boolean>> = MediatorLiveData()
     var notesCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     companion object {
@@ -37,33 +37,33 @@ class NotesViewModel @Inject constructor(
 
     fun loadNoteList() {
         if (notes.value == null) {
-            notes.value = MainResource.Loading()
+            notes.value = Resource.Loading
             notesCompositeDisposable.add(repository.getAllNote()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { noteList ->
-                        notes.value = MainResource.Success(noteList ?: emptyList())
+                        notes.value = Resource.Success(noteList ?: mutableListOf())
                     },
                     { error ->
-                        notes.value = MainResource.Error(error.message ?: "Something went wrong!")
+                        notes.value = Resource.Error(error as Exception)
                     }
                 ))
         }
     }
 
     fun clearAllNotes() {
-        clearAllNotes.value = MainResource.Loading()
+        clearAllNotes.value = Resource.Loading
         notesCompositeDisposable.add(
             repository.deleteAllNote()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                      clearAllNotes.value = MainResource.Success(true)
+                      clearAllNotes.value = Resource.Success(true)
                     },
                     { error ->
-                        clearAllNotes.value = MainResource.Error(error.message?:"Error while clearing all notes")
+                        clearAllNotes.value = Resource.Error(error as Exception)
                     }
                 )
         )

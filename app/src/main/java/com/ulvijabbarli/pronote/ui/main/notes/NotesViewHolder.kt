@@ -4,10 +4,9 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.ulvijabbarli.pronote.R
-import com.ulvijabbarli.pronote.data.model.Note
+import com.ulvijabbarli.pronote.data.Note
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_note_list.*
-import javax.inject.Inject
 
 class NotesViewHolder(override val containerView: View,var glide:RequestManager) : RecyclerView.ViewHolder(containerView),
     LayoutContainer {

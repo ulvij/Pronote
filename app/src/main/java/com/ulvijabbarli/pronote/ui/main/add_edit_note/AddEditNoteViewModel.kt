@@ -1,26 +1,26 @@
-package com.ulvijabbarli.pronote.ui.main.add_note
+package com.ulvijabbarli.pronote.ui.main.add_edit_note
 
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.ulvijabbarli.pronote.data.NoteRepository
-import com.ulvijabbarli.pronote.data.model.Note
-import com.ulvijabbarli.pronote.ui.main.MainResource
+import com.ulvijabbarli.pronote.data.Note
+import com.ulvijabbarli.pronote.data.Resource
+import com.ulvijabbarli.pronote.data.source.NoteRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class AddNoteViewModel @Inject constructor(
+class AddEditNoteViewModel @Inject constructor(
     var repository: NoteRepository
 ) : ViewModel() {
 
-    var liveNote: MediatorLiveData<MainResource<Boolean>> = MediatorLiveData()
+    var liveNote: MediatorLiveData<Resource<Boolean>> = MediatorLiveData()
     var insertNoteCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
 
     companion object {
-        val TAG = AddNoteViewModel::class.qualifiedName
+        val TAG = AddEditNoteViewModel::class.qualifiedName
     }
 
     init {
@@ -33,14 +33,16 @@ class AddNoteViewModel @Inject constructor(
     }
 
     fun insertNote(title: String?, description: String?) {
-        liveNote.value = MainResource.Loading()
-        val note = Note(title = title, description = description)
+        liveNote.value = Resource.Loading
+        val note = Note(
+            title = title,
+            description = description
+        )
         val validation = note.isValid()
-        Log.e("LOG_NOTE-->","Desc-->${description}, TITLE-->${title}")
         // check validation of fields
         if (!validation.first) {
             liveNote.value =
-                MainResource.Error(validation.second ?: "Validation Error", validation.first)
+                Resource.Error(Exception(validation.second ?: "Validation Error"))
             return
         }
 
@@ -50,11 +52,11 @@ class AddNoteViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    liveNote.value = MainResource.Success(true)
+                    liveNote.value = Resource.Success(true)
                 },
                 { error ->
                     liveNote.value =
-                        MainResource.Error(error.message ?: "Something went wrong!")
+                        Resource.Error(error as Exception)
                 }
             )
         )

@@ -12,9 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.ulvijabbarli.pronote.R
-import com.ulvijabbarli.pronote.data.model.Note
-import com.ulvijabbarli.pronote.ui.main.MainResource
-import com.ulvijabbarli.pronote.viewmodel.ViewModelProviderFactory
+import com.ulvijabbarli.pronote.data.Note
+import com.ulvijabbarli.pronote.data.Resource
+import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_notes.*
 import javax.inject.Inject
@@ -59,16 +59,16 @@ class NotesFragment : DaggerFragment() {
             Observer { noteResource ->
                 if (noteResource != null) {
                     when (noteResource) {
-                        is MainResource.Loading -> {
+                        is Resource.Loading -> {
                             configureLoading(true)
                             Log.d(TAG, "onChanged: LOADING...")
                         }
-                        is MainResource.Error -> {
+                        is Resource.Error -> {
                             configureLoading(false)
-                            showError(noteResource.message)
-                            Log.d(TAG, "onChanged: ERROR... ${noteResource.message}")
+                            showError(noteResource.exception.message)
+                            Log.d(TAG, "onChanged: ERROR... ${noteResource.exception.message}")
                         }
-                        is MainResource.Success -> {
+                        is Resource.Success -> {
                             configureLoading(false)
                             handleData(noteResource.data)
                             Log.d(TAG, "onChanged: SUCCESS...${noteResource.data}")
@@ -122,14 +122,14 @@ class NotesFragment : DaggerFragment() {
             Observer { clearNotesResponse ->
                 if (clearNotesResponse != null) {
                     when (clearNotesResponse) {
-                        is MainResource.Loading -> {
+                        is Resource.Loading -> {
                             configureLoading(true)
                         }
-                        is MainResource.Error -> {
-                            showError(clearNotesResponse.message)
+                        is Resource.Error -> {
+                            showError(clearNotesResponse.exception.message)
                             configureLoading(false)
                         }
-                        is MainResource.Success -> configureLoading(false)
+                        is Resource.Success -> configureLoading(false)
                     }
                 }
             }

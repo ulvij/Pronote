@@ -11,7 +11,6 @@ class NotesViewModelTest {
 
     // Subject under test
     private lateinit var notesViewModel: NotesViewModel
-    private lateinit var dataHelper: DataHelper
 
     // Executes each task synchronously using Architecture Components.
     @get:Rule

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.ulvijabbarli.pronote.R
-import com.ulvijabbarli.pronote.data.model.Note
+import com.ulvijabbarli.pronote.data.Note
 
 class NotesAdapter(var glide:RequestManager) : RecyclerView.Adapter<NotesViewHolder>() {
 

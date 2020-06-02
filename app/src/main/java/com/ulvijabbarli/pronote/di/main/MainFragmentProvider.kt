@@ -1,6 +1,6 @@
 package com.ulvijabbarli.pronote.di.main
 
-import com.ulvijabbarli.pronote.ui.main.add_note.AddNoteFragment
+import com.ulvijabbarli.pronote.ui.main.add_edit_note.AddEditNoteFragment
 import com.ulvijabbarli.pronote.ui.main.notes.NotesFragment
 import com.ulvijabbarli.pronote.ui.main.notes.NotesModul
 import dagger.Module
@@ -13,7 +13,7 @@ abstract class MainFragmentProvider {
     abstract fun provideNotesFragmentFactory(): NotesFragment
 
     @ContributesAndroidInjector
-    abstract fun provideAddNoteFragmentFactory(): AddNoteFragment
+    abstract fun provideAddNoteFragmentFactory(): AddEditNoteFragment
 
 
 }
