@@ -1,10 +1,12 @@
 package com.ulvijabbarli.pronote.ui.main
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.ui.BaseActivity
+import com.ulvijabbarli.pronote.util.Constants
 import com.ulvijabbarli.pronote.util.hideKeyboard
 import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,7 +34,10 @@ class MainActivity : BaseActivity() {
         }
 
         float_add_note.setOnClickListener {
-            navController.navigate(R.id.action_notesFragment_to_addNoteFragment)
+            navController.navigate(
+                R.id.action_notesFragment_to_addEditNoteFragment,
+                bundleOf(Pair(Constants.title, getString(R.string.title_add_note)))
+            )
         }
     }
 }

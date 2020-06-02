@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.ulvijabbarli.pronote.R
+import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
 import com.ulvijabbarli.pronote.util.hideKeyboard
 import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
@@ -47,6 +49,7 @@ class AddEditNoteFragment : DaggerFragment() {
         addEditNoteViewModel = ViewModelProviders
             .of(this, viewModelProvider)
             .get(AddEditNoteViewModel::class.java)
+        text_title.text = arguments?.getString("title")
         initListeners()
         bindObservers()
     }
@@ -57,7 +60,7 @@ class AddEditNoteFragment : DaggerFragment() {
             hideKeyboard()
             addEditNoteViewModel.insertNote(
                 text_title.text.toString(),
-                text_content.text.toString()
+                text_note.text.toString()
             )
         }
     }
@@ -69,17 +72,14 @@ class AddEditNoteFragment : DaggerFragment() {
                     when (noteResource) {
                         is Resource.Loading -> {
                             controlLoading(true)
-                            Log.d(TAG, "onChanged: LOADING...")
                         }
                         is Resource.Error -> {
                             controlLoading(false)
                             showError(noteResource.exception.message)
-                            Log.d(TAG, "onChanged: ERROR... ${noteResource.exception.message}")
                         }
                         is Resource.Success -> {
                             controlLoading(false)
                             handleSuccess()
-                            Log.d(TAG, "onChanged: SUCCESS...")
                         }
                     }
                 }
@@ -99,7 +99,11 @@ class AddEditNoteFragment : DaggerFragment() {
     }
 
     private fun handleSuccess() {
-        Toast.makeText(requireContext(), getString(R.string.message_note_created), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.message_note_created),
+            Toast.LENGTH_SHORT
+        ).show()
         navController.popBackStack()
     }
 

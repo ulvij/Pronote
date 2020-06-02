@@ -12,8 +12,7 @@ class NotesViewHolder(override val containerView: View,var glide:RequestManager)
     LayoutContainer {
 
 
-    fun bind(note: Note, callback: ((note: Note) -> Unit)?) {
-        containerView.setOnClickListener { callback?.invoke(note) }
+    fun bind(note: Note) {
         glide.load(R.drawable.ic_image_note).into(image_note)
         text_note_title.text = note.title
     }

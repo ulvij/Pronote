@@ -16,6 +16,21 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:textSize="28sp"
+        android:gravity="center_vertical"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/text_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ellipsize="end"
+        android:paddingStart="4dp"
+        android:paddingEnd="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_back"
+        app:layout_constraintLeft_toRightOf="@id/image_back"
+        app:layout_constraintRight_toLeftOf="@id/image_save"
+        app:layout_constraintTop_toTopOf="@id/image_back" />
+
     <ImageView
         android:id="@+id/image_save"
         android:layout_width="wrap_content"
@@ -24,52 +39,40 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_back">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_title"
-            android:maxLength="30"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/note_title_hint"
-            android:inputType="text"
-            android:maxLines="1"
-            android:scrollHorizontally="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
-            android:textSize="26sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <EditText
         android:layout_marginTop="20dp"
+        android:id="@+id/text_note_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="@string/note_title_hint"
+        android:inputType="text"
+        android:maxLength="30"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorLightGrey"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_title">
+        app:layout_constraintTop_toBottomOf="@id/image_back" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top"
-            android:hint="@string/note_description_hint"
-            android:maxLines="7"
-            android:minLines="5"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
-            android:textSize="22sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
+    <EditText
+        android:id="@+id/text_note"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="@string/note_hint"
+        android:padding="2dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorLightGrey"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/progressbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_note_title" />
 
     <ProgressBar
         android:id="@+id/progressbar"

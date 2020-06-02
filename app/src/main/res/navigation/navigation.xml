@@ -9,16 +9,27 @@
         android:id="@+id/notesFragment"
         android:name="com.ulvijabbarli.pronote.ui.main.notes.NotesFragment"
         android:label="fragment_notes"
-        tools:layout="@layout/fragment_notes" >
+        tools:layout="@layout/fragment_notes">
         <action
-            android:id="@+id/action_notesFragment_to_addNoteFragment"
+            android:id="@+id/action_notesFragment_to_addEditNoteFragment"
             app:destination="@id/addNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNoteFragment"
         android:name="com.ulvijabbarli.pronote.ui.main.add_edit_note.AddEditNoteFragment"
         android:label="fragment_add_note"
-        tools:layout="@layout/fragment_add_note" />
+        tools:layout="@layout/fragment_add_note">
+
+        <argument
+            android:name="noteId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="false" />
+
+    </fragment>
 
 
 </navigation>

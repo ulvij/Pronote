@@ -7,13 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.bumptech.glide.RequestManager
 import com.google.android.material.snackbar.Snackbar
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
+import com.ulvijabbarli.pronote.util.Constants
+import com.ulvijabbarli.pronote.util.EventObserver
 import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_notes.*
@@ -24,13 +30,15 @@ import javax.inject.Inject
  */
 class NotesFragment : DaggerFragment() {
 
-    lateinit var notesViewModel: NotesViewModel
+    private lateinit var notesViewModel: NotesViewModel
+    private lateinit var navController: NavController
+    private lateinit var notesAdapter: NotesAdapter
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
     @Inject
-    lateinit var notesAdapter: NotesAdapter
+    lateinit var glideManager: RequestManager
 
     companion object {
         val TAG = NotesFragment::class.java.name
@@ -47,36 +55,50 @@ class NotesFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
         notesViewModel =
             ViewModelProviders.of(this, viewModelProviderFactory).get(NotesViewModel::class.java)
-        recycler_view_notes.adapter = notesAdapter
         image_clear_all.setOnClickListener { showAreYouSureToClearAllDialog() }
-        getNoteList()
+        setUpNotesAdapter()
+        setUpObservers()
+        notesViewModel.loadNoteList()
     }
 
-    private fun getNoteList() {
+    private fun setUpNotesAdapter() {
+        notesAdapter = NotesAdapter(glideManager, notesViewModel)
+        recycler_view_notes.adapter = notesAdapter
+    }
+
+    private fun setUpObservers() {
+        notesViewModel.openNoteDetail.observe(viewLifecycleOwner,
+            EventObserver {
+                navController.navigate(
+                    R.id.action_notesFragment_to_addEditNoteFragment,
+                    bundleOf(
+                        Pair(Constants.title, getString(R.string.title_edit_note)),
+                        Pair(Constants.noteId, it.id.toString())
+                    )
+                )
+            })
+
         notesViewModel.notes.observe(viewLifecycleOwner,
             Observer { noteResource ->
                 if (noteResource != null) {
                     when (noteResource) {
                         is Resource.Loading -> {
                             configureLoading(true)
-                            Log.d(TAG, "onChanged: LOADING...")
                         }
                         is Resource.Error -> {
                             configureLoading(false)
                             showError(noteResource.exception.message)
-                            Log.d(TAG, "onChanged: ERROR... ${noteResource.exception.message}")
                         }
                         is Resource.Success -> {
                             configureLoading(false)
                             handleData(noteResource.data)
-                            Log.d(TAG, "onChanged: SUCCESS...${noteResource.data}")
                         }
                     }
                 }
             })
-        notesViewModel.loadNoteList()
     }
 
     private fun configureLoading(show: Boolean) {

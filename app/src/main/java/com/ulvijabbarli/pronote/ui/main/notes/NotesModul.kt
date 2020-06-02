@@ -7,9 +7,9 @@ import dagger.Provides
 @Module
 class NotesModul {
 
-    @Provides
-    fun notesAdapter(glide:RequestManager): NotesAdapter {
-        return NotesAdapter(glide)
-    }
+//    @Provides
+//    fun notesAdapter(glide:RequestManager,viewModel:NotesViewModel): NotesAdapter {
+//        return NotesAdapter(glide,viewModel)
+//    }
 
 }
