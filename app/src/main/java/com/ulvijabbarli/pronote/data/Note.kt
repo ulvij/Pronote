@@ -2,6 +2,7 @@ package com.ulvijabbarli.pronote.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ulvijabbarli.pronote.R
 
 @Entity(tableName = "note_table")
 data class Note(
@@ -11,22 +12,7 @@ data class Note(
     var createdDate: Long? = System.currentTimeMillis()
 ) {
 
-    fun isValid(): Pair<Boolean, String?> {
 
-        var messages = ""
-
-        if (title.isNullOrEmpty())
-            messages = messages.plus("Please add title")
-
-        if (description.isNullOrEmpty())
-            messages = messages.plus("\nPlease add description")
-
-        return if (messages.isEmpty())
-            Pair(true, null)
-        else
-            Pair(false, messages)
-
-    }
-
-
+    val isInvalid: Boolean
+        get() = title.isNullOrEmpty() || description.isNullOrEmpty()
 }

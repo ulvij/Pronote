@@ -26,8 +26,8 @@ class DefaultNoteRepository @Inject constructor(
         return notesDataSource.getNote(id)
     }
 
-    override fun insertNote(note: Note): Completable {
-        return notesDataSource.insertNote(note)
+    override fun saveNote(note: Note): Completable {
+        return notesDataSource.saveNote(note)
     }
 
     override fun deleteNote(id: Long): Completable {

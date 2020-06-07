@@ -20,12 +20,12 @@ interface NoteDao {
     fun getAllNote(): Flowable<MutableList<Note>>
 
     /**
-     * Insert a note in the database. If the note already exists, replace it.
+     * Save a note in the database. If the note already exists, replace it.
      *
      * @param note the note to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(note: Note): Completable
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveNote(note: Note): Completable
 
     /**
      * Observes a single note.

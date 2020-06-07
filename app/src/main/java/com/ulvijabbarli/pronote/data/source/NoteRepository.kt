@@ -14,7 +14,7 @@ interface NoteRepository {
 
     fun getNote(id: Long): Flowable<Note>
 
-    fun insertNote(note: Note): Completable
+    fun saveNote(note: Note): Completable
 
     fun deleteNote(id: Long): Completable
 

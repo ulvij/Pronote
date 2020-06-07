@@ -1,12 +1,10 @@
 package com.ulvijabbarli.pronote.ui.main.add_edit_note
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
+import com.ulvijabbarli.pronote.util.Constants
 import com.ulvijabbarli.pronote.util.hideKeyboard
 import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
@@ -49,24 +48,26 @@ class AddEditNoteFragment : DaggerFragment() {
         addEditNoteViewModel = ViewModelProviders
             .of(this, viewModelProvider)
             .get(AddEditNoteViewModel::class.java)
-        text_title.text = arguments?.getString("title")
+        text_title.text = arguments?.getString(Constants.title)
+
         initListeners()
         bindObservers()
+        addEditNoteViewModel.start(arguments?.getString(Constants.noteId))
     }
 
     private fun initListeners() {
         image_back.setOnClickListener { navController.popBackStack() }
         image_save.setOnClickListener {
             hideKeyboard()
-            addEditNoteViewModel.insertNote(
-                text_title.text.toString(),
-                text_note.text.toString()
+            addEditNoteViewModel.saveNote(
+                text_note_title.text.trim().toString(),
+                text_note.text.trim().toString()
             )
         }
     }
 
     private fun bindObservers() {
-        addEditNoteViewModel.liveNote
+        addEditNoteViewModel.note
             .observe(viewLifecycleOwner, Observer { noteResource ->
                 if (noteResource != null) {
                     when (noteResource) {
@@ -79,12 +80,30 @@ class AddEditNoteFragment : DaggerFragment() {
                         }
                         is Resource.Success -> {
                             controlLoading(false)
-                            handleSuccess()
+                            text_note_title.setText(noteResource.data.title)
+                            text_note.setText(noteResource.data.description)
                         }
                     }
                 }
             })
+
+        addEditNoteViewModel.noteUpdateEvent.observe(viewLifecycleOwner, Observer { resource ->
+            if (resource != null) {
+                when (resource) {
+                    is Resource.Success -> {
+                        controlLoading(false)
+                        navController.popBackStack()
+                    }
+                    is Resource.Error -> {
+                        controlLoading(false)
+                        showError(resource.exception.message)
+                    }
+                    Resource.Loading -> controlLoading(true)
+                }
+            }
+        })
     }
+
 
     private fun controlLoading(show: Boolean) {
         progressbar.visibility = if (show) View.VISIBLE else View.INVISIBLE
@@ -97,15 +116,4 @@ class AddEditNoteFragment : DaggerFragment() {
             } ?: Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
         }
     }
-
-    private fun handleSuccess() {
-        Toast.makeText(
-            requireContext(),
-            getString(R.string.message_note_created),
-            Toast.LENGTH_SHORT
-        ).show()
-        navController.popBackStack()
-    }
-
-
 }

@@ -18,8 +18,8 @@ class NotesLocalDataSource @Inject constructor(var pronoteDatabase: PronoteDatab
         return pronoteDatabase.noteDao().getNote(id)
     }
 
-    override fun insertNote(note: Note): Completable {
-        return pronoteDatabase.noteDao().insert(note)
+    override fun saveNote(note: Note): Completable {
+        return pronoteDatabase.noteDao().saveNote(note)
     }
 
     override fun deleteNote(id: Long): Completable {

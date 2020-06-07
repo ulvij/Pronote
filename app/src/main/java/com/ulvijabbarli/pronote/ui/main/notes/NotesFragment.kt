@@ -70,6 +70,7 @@ class NotesFragment : DaggerFragment() {
     }
 
     private fun setUpObservers() {
+        // Open Note observer
         notesViewModel.openNoteDetail.observe(viewLifecycleOwner,
             EventObserver {
                 navController.navigate(
@@ -81,6 +82,7 @@ class NotesFragment : DaggerFragment() {
                 )
             })
 
+        // note list observer
         notesViewModel.notes.observe(viewLifecycleOwner,
             Observer { noteResource ->
                 if (noteResource != null) {
@@ -99,47 +101,8 @@ class NotesFragment : DaggerFragment() {
                     }
                 }
             })
-    }
 
-    private fun configureLoading(show: Boolean) {
-        progress_bar_notes.visibility = if (show) View.VISIBLE else View.INVISIBLE
-    }
-
-    private fun showError(message: String?) {
-        message?.let { error ->
-            view?.let { v ->
-                Snackbar.make(v, error, 2000).show()
-            } ?: Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun handleData(notes: List<Note>?) {
-        notesAdapter.updateDataSet(notes ?: emptyList())
-
-        if (notesAdapter.itemCount == 0) {
-            recycler_view_notes.visibility = View.INVISIBLE
-            linear_empty.visibility = View.VISIBLE
-        } else {
-            recycler_view_notes.visibility = View.VISIBLE
-            linear_empty.visibility = View.INVISIBLE
-        }
-    }
-
-    private fun showAreYouSureToClearAllDialog() {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.title_warning))
-            .setMessage(getString(R.string.message_are_you_sure_to_clear_all_notes))
-            .setPositiveButton(getString(R.string.action_yes)) { dialog, _ ->
-                dialog.dismiss()
-                clearAllNotes()
-            }
-            .setNegativeButton(getString(R.string.action_no)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
-
-    private fun clearAllNotes() {
+        // clear all notes observer
         notesViewModel.clearAllNotes.observe(viewLifecycleOwner,
             Observer { clearNotesResponse ->
                 if (clearNotesResponse != null) {
@@ -156,6 +119,43 @@ class NotesFragment : DaggerFragment() {
                 }
             }
         )
-        notesViewModel.clearAllNotes()
     }
+
+    private fun configureLoading(show: Boolean) {
+        progress_bar_notes.visibility = if (show) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun showError(message: String?) {
+        message?.let { error ->
+            view?.let { v ->
+                Snackbar.make(v, error, 2000).show()
+            } ?: Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun handleData(notes: List<Note>?) {
+        notesAdapter.updateDataSet(notes ?: emptyList())
+        if (notesAdapter.itemCount == 0) {
+            recycler_view_notes.visibility = View.INVISIBLE
+            linear_empty.visibility = View.VISIBLE
+        } else {
+            recycler_view_notes.visibility = View.VISIBLE
+            linear_empty.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showAreYouSureToClearAllDialog() {
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.title_warning))
+            .setMessage(getString(R.string.message_are_you_sure_to_clear_all_notes))
+            .setPositiveButton(getString(R.string.action_yes)) { dialog, _ ->
+                dialog.dismiss()
+                notesViewModel.clearAllNotes()
+            }
+            .setNegativeButton(getString(R.string.action_no)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.ulvijabbarli.pronote.ui.main.notes
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +25,6 @@ class NotesAdapter(var glide: RequestManager, var viewModel: NotesViewModel) :
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         holder.containerView.setOnClickListener {
-            Log.e("LOG_CLICK", "clicked")
             viewModel.openNote(Event(noteList[position]))
         }
         holder.bind(noteList[position])
