@@ -50,7 +50,6 @@
             android:layout_gravity="center"
             android:visibility="invisible" />
 
-
     </FrameLayout>
 
     <ImageView
@@ -78,7 +77,8 @@
         android:clipToPadding="false"
         android:paddingBottom="100dp"
         android:visibility="visible"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

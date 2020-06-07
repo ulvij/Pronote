@@ -15,6 +15,7 @@ class NotesViewHolder(override val containerView: View,var glide:RequestManager)
     fun bind(note: Note) {
         glide.load(R.drawable.ic_image_note).into(image_note)
         text_note_title.text = note.title
+        text_note_content.text = note.description
     }
 
 }
