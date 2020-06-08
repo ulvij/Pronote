@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:theme="@style/Theme.MaterialComponents.DayNight"
-    app:cardBackgroundColor="@color/colorAppBackground"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="6dp"
-    app:cardUseCompatPadding="true">
+    android:layout_margin="4dp"
+
+    android:background="@drawable/border"
+    android:theme="@style/Theme.MaterialComponents.DayNight">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp">
@@ -31,9 +31,9 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="start"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
             android:maxLines="1"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/text_note_content"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -46,9 +46,9 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="start"
-            android:textColor="@color/colorAccent"
-            android:textSize="12sp"
             android:maxLines="10"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/text_note_title"
             app:layout_constraintRight_toRightOf="@id/text_note_title"
@@ -58,4 +58,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>
