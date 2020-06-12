@@ -1,18 +1,11 @@
 package com.ulvijabbarli.pronote.data
 
+import com.ulvijabbarli.pronote.data.source.local.NotesDataSource
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
-class FakeDataHelper: DataHelper{
+class FakeDataSource: NotesDataSource{
 
-
-    override fun setAccessToken(token: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getAccessToken(): String? {
-        TODO("Not yet implemented")
-    }
 
     override fun getAllNote(): Flowable<MutableList<Note>> {
         TODO("Not yet implemented")
@@ -22,7 +15,7 @@ class FakeDataHelper: DataHelper{
         TODO("Not yet implemented")
     }
 
-    override fun insertNote(note: Note): Completable {
+    override fun saveNote(note: Note): Completable {
         TODO("Not yet implemented")
     }
 
@@ -33,5 +26,6 @@ class FakeDataHelper: DataHelper{
     override fun deleteAllNote(): Completable {
         TODO("Not yet implemented")
     }
+
 
 }

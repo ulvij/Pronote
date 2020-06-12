@@ -5,8 +5,6 @@ import android.content.Context
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.source.DefaultNoteRepository
 import com.ulvijabbarli.pronote.data.source.NoteRepository
@@ -54,12 +52,6 @@ class AppModule {
     ): RequestManager {
         return Glide.with(application)
             .setDefaultRequestOptions(requestOptions)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGson(): Gson {
-        return GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
     }
 
 

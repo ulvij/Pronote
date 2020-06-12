@@ -1,5 +1,5 @@
 package com.ulvijabbarli.pronote.data
 
-class DataManagerTest {
+class DataNoteRepositoryTest {
 
 }
