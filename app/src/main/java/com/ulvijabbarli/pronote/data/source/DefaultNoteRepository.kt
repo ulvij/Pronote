@@ -1,6 +1,5 @@
 package com.ulvijabbarli.pronote.data.source
 
-import android.content.Context
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.source.local.NotesDataSource
 import io.reactivex.Completable
@@ -10,8 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class DefaultNoteRepository @Inject constructor(
-    var notesDataSource: NotesDataSource,
-    var context: Context
+    var notesDataSource: NotesDataSource
 ) : NoteRepository {
 
     companion object {

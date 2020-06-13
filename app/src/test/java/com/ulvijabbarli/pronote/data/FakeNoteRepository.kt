@@ -4,42 +4,33 @@ import com.ulvijabbarli.pronote.data.source.NoteRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
-class FakeNoteRepository:NoteRepository {
+class FakeNoteRepository : NoteRepository {
 
-    var noteServiceData:LinkedHashMap<Long,Note> = LinkedHashMap()
-
-
-    private val observablesNotes = Flowable.generate<MutableList<Note>>{}
+    var noteServiceData: LinkedHashMap<Long, Note> = LinkedHashMap()
 
     override fun getAllNote(): Flowable<MutableList<Note>> {
-        return observablesNotes
+        return Flowable.just(noteServiceData.values.toMutableList())
     }
 
     override fun getNote(id: Long): Flowable<Note> {
-        noteServiceData[id]?.let {
-            return Flowable.just(it)
-        }
-        throw Exception("Could not find note")
+        val note = noteServiceData[id]
+
+        return if (note != null)
+            Flowable.just(note)
+        else
+            Flowable.error(Exception("Could not find note"))
     }
 
     override fun saveNote(note: Note): Completable {
-        noteServiceData[note.id] = note
-        return Completable.complete()
+        return Completable.fromAction { noteServiceData[note.id] = note }
     }
 
     override fun deleteNote(id: Long): Completable {
-        noteServiceData.remove(id)
-        return Completable.complete()
+        return Completable.fromAction { noteServiceData.remove(id) }
     }
 
     override fun deleteAllNote(): Completable {
-        noteServiceData.clear()
-        return Completable.complete()
-    }
-
-
-    fun refreshObservable(){
-
+        return Completable.fromAction { noteServiceData.clear() }
     }
 
 }
