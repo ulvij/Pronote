@@ -13,9 +13,9 @@ data class Note(
 ) {
 
 
-
     val isInvalid: Boolean
         get() = title.isNullOrEmpty() || description.isNullOrEmpty()
+
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -24,14 +24,13 @@ data class Note(
         other as Note
 
         if (id != other.id) return false
-        if (createdDate != other.createdDate) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + (createdDate?.hashCode() ?: 0)
-        return result
+        return id.hashCode()
     }
+
+
 }

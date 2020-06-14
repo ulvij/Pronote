@@ -6,7 +6,7 @@ import io.reactivex.Flowable
 
 class FakeNoteRepository : NoteRepository {
 
-    var noteServiceData: LinkedHashMap<Long, Note> = LinkedHashMap()
+    private var noteServiceData: LinkedHashMap<Long, Note> = LinkedHashMap()
 
     override fun getAllNote(): Flowable<MutableList<Note>> {
         return Flowable.just(noteServiceData.values.toMutableList())

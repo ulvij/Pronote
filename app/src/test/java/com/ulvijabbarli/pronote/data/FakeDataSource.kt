@@ -4,7 +4,7 @@ import com.ulvijabbarli.pronote.data.source.local.NotesDataSource
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
-class FakeDataSource(var notes: MutableList<Note> = mutableListOf()) : NotesDataSource {
+class FakeDataSource(private var notes: MutableList<Note> = mutableListOf()) : NotesDataSource {
 
     override fun getAllNote(): Flowable<MutableList<Note>> {
         return Flowable.just(notes)
