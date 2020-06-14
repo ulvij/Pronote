@@ -1,34 +1,30 @@
 package com.ulvijabbarli.pronote.ui.main
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProviders
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.ulvijabbarli.pronote.R
-import com.ulvijabbarli.pronote.data.local.prefs.PreferencesHelper
-import com.ulvijabbarli.pronote.ui.base.BaseActivity
+import com.ulvijabbarli.pronote.util.Constants
 import com.ulvijabbarli.pronote.util.hideKeyboard
-import com.ulvijabbarli.pronote.viewmodel.ViewModelProviderFactory
+import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
+import dagger.android.DaggerActivity
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : DaggerAppCompatActivity() {
 
     private lateinit var navController: NavController
-    lateinit var mainViewModel: MainViewModel
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
-
-    @Inject
-    lateinit var prefHelper: PreferencesHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.fragment)
-        mainViewModel =
-            ViewModelProviders.of(this, viewModelProviderFactory).get(MainViewModel::class.java)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             hideKeyboard()
@@ -40,7 +36,10 @@ class MainActivity : BaseActivity() {
         }
 
         float_add_note.setOnClickListener {
-            navController.navigate(R.id.action_notesFragment_to_addNoteFragment)
+            navController.navigate(
+                R.id.action_notesFragment_to_addEditNoteFragment,
+                bundleOf(Pair(Constants.title, getString(R.string.title_add_note)))
+            )
         }
     }
 }

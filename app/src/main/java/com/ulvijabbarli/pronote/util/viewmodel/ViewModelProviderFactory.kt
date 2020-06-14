@@ -1,4 +1,4 @@
-package com.ulvijabbarli.pronote.viewmodel
+package com.ulvijabbarli.pronote.util.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

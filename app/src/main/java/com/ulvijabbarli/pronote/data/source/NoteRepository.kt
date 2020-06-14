@@ -1,16 +1,20 @@
-package com.ulvijabbarli.pronote.data.local.db
+package com.ulvijabbarli.pronote.data.source
 
-import com.ulvijabbarli.pronote.data.model.Note
+import com.ulvijabbarli.pronote.data.Note
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
-interface DbHelper {
+
+/**
+ * Interface to the data layer.
+ */
+interface NoteRepository {
 
     fun getAllNote(): Flowable<MutableList<Note>>
 
     fun getNote(id: Long): Flowable<Note>
 
-    fun insertNote(note: Note): Completable
+    fun saveNote(note: Note): Completable
 
     fun deleteNote(id: Long): Completable
 
