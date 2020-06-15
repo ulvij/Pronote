@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_notes">
         <action
             android:id="@+id/action_notesFragment_to_addEditNoteFragment"
-            app:destination="@id/addNoteFragment" />
+            app:destination="@id/addNoteFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit" />
     </fragment>
     <fragment
         android:id="@+id/addNoteFragment"

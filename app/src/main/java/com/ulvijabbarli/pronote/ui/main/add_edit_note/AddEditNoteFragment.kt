@@ -42,6 +42,7 @@ class AddEditNoteFragment : DaggerFragment() {
         return inflater.inflate(R.layout.fragment_add_note, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController(view)

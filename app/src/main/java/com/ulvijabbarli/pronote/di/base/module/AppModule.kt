@@ -2,10 +2,6 @@ package com.ulvijabbarli.pronote.di.base.module
 
 import android.app.Application
 import android.content.Context
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
-import com.bumptech.glide.request.RequestOptions
-import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.source.DefaultNoteRepository
 import com.ulvijabbarli.pronote.data.source.NoteRepository
 import com.ulvijabbarli.pronote.data.source.local.NotesDataSource
@@ -26,7 +22,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideDbHelper(notesLocalDataSource: NotesLocalDataSource): NotesDataSource {
+    fun provideDataSource(notesLocalDataSource: NotesLocalDataSource): NotesDataSource {
         return notesLocalDataSource
     }
 
@@ -35,24 +31,5 @@ class AppModule {
     fun provideContext(application: Application): Context {
         return application
     }
-
-    @Singleton
-    @Provides
-    fun provideRequestOptions(): RequestOptions {
-        return RequestOptions
-            .placeholderOf(R.drawable.ic_image_note)
-            .error(R.drawable.ic_error)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGlideInstance(
-        application: Application,
-        requestOptions: RequestOptions
-    ): RequestManager {
-        return Glide.with(application)
-            .setDefaultRequestOptions(requestOptions)
-    }
-
 
 }

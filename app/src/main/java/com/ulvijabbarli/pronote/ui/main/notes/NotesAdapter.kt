@@ -3,12 +3,11 @@ package com.ulvijabbarli.pronote.ui.main.notes
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.RequestManager
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.util.Event
 
-class NotesAdapter(var glide: RequestManager, var viewModel: NotesViewModel) :
+class NotesAdapter(var viewModel: NotesViewModel) :
     RecyclerView.Adapter<NotesViewHolder>() {
 
     private val noteList = mutableListOf<Note>()
@@ -16,7 +15,7 @@ class NotesAdapter(var glide: RequestManager, var viewModel: NotesViewModel) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_note_list, parent, false)
-        return NotesViewHolder(view, glide)
+        return NotesViewHolder(view)
     }
 
     override fun getItemCount(): Int {
