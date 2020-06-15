@@ -14,4 +14,5 @@
     <string name="title_edit_note">Edit Note</string>
     <string name="title_add_note">Add Note</string>
     <string name="error_note_can_not_be_empty">Note can not be empty</string>
+    <string name="content_bubble">content_bubble</string>
 </resources>
