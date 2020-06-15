@@ -2,7 +2,6 @@ package com.ulvijabbarli.pronote.ui.main.notes
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.bumptech.glide.RequestManager
 import com.google.android.material.snackbar.Snackbar
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.Note
@@ -36,9 +34,6 @@ class NotesFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
-
-    @Inject
-    lateinit var glideManager: RequestManager
 
     companion object {
         val TAG = NotesFragment::class.java.name
@@ -65,7 +60,7 @@ class NotesFragment : DaggerFragment() {
     }
 
     private fun setUpNotesAdapter() {
-        notesAdapter = NotesAdapter(glideManager, notesViewModel)
+        notesAdapter = NotesAdapter(notesViewModel)
         recycler_view_notes.adapter = notesAdapter
     }
 

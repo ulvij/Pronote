@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Pronote</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="msg_do_not_have_not">You don\'t have any not</string>
+    <string name="msg_do_not_have_not">Notes appears here</string>
     <string name="note_title_hint">Title</string>
     <string name="note_hint">Note</string>
     <string name="title_warning">Warning!</string>
