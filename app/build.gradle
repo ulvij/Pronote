@@ -98,6 +98,8 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
     // Robolectric environment
     testImplementation "org.robolectric:robolectric:$rootProject.robolectricVersion"
+    // Mockito
+    testImplementation "org.mockito:mockito-core:2.19.0"
     // Truth
     testImplementation "com.google.truth:truth:$rootProject.truthVersion"
     // AndroidX Test - JVM testing

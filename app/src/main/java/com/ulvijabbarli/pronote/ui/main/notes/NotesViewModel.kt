@@ -3,6 +3,7 @@ package com.ulvijabbarli.pronote.ui.main.notes
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
@@ -13,27 +14,25 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class NotesViewModel @Inject constructor(
-    var repository: NoteRepository
-) : ViewModel() {
+class NotesViewModel @Inject constructor(var repository: NoteRepository) : ViewModel() {
 
-    private var _notes = MediatorLiveData<Resource<List<Note>>>()
+    private var _notes = MutableLiveData<Resource<List<Note>>>()
     val notes = _notes as LiveData<Resource<List<Note>>>
 
-    private var _clearAllNotes = MediatorLiveData<Resource<Boolean>>()
+    private var _clearAllNotes = MutableLiveData<Resource<Boolean>>()
     val clearAllNotes = _clearAllNotes as LiveData<Resource<Boolean>>
 
-    private var notesCompositeDisposable: CompositeDisposable = CompositeDisposable()
-
-    private var _openNoteDetail = MediatorLiveData<Event<Note>>()
+    private var _openNoteDetail = MutableLiveData<Event<Note>>()
     val openNoteDetail = _openNoteDetail as LiveData<Event<Note>>
+
+    var notesCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     companion object {
         val TAG = NotesViewModel::class.qualifiedName
     }
 
     init {
-        Log.e(TAG, "Notes view model is working")
+        Log.e(TAG, "init notes view model")
     }
 
     override fun onCleared() {
@@ -76,7 +75,7 @@ class NotesViewModel @Inject constructor(
         )
     }
 
-    fun openNote(event:Event<Note>){
+    fun openNote(event: Event<Note>) {
         _openNoteDetail.value = event
     }
 
