@@ -22,11 +22,11 @@ class AddEditNoteViewModel @Inject constructor(
     private var _noteUpdateEvent: MediatorLiveData<Resource<Boolean>> = MediatorLiveData()
     val noteUpdateEvent = _noteUpdateEvent as LiveData<Resource<Boolean>>
 
-    private var _note = MediatorLiveData<Resource<Note>>()
+    private var _note = MutableLiveData<Resource<Note>>()
     val note = _note as LiveData<Resource<Note>>
 
-    private var isNewNote: Boolean = false
-    private var currentNoteId: String? = null
+    var isNewNote: Boolean = false
+    var currentNoteId: String? = null
 
     var disposables: CompositeDisposable = CompositeDisposable()
 
@@ -95,7 +95,7 @@ class AddEditNoteViewModel @Inject constructor(
                     _noteUpdateEvent.value = Resource.Success(true)
                 },
                 { error ->
-                    _note.value = Resource.Error(error as Exception)
+                    _noteUpdateEvent.value = Resource.Error(error as Exception)
                 }
             )
         )
@@ -116,7 +116,7 @@ class AddEditNoteViewModel @Inject constructor(
                     _noteUpdateEvent.value = Resource.Success(true)
                 },
                 { error ->
-                    _note.value = Resource.Error(error as Exception)
+                    _noteUpdateEvent.value = Resource.Error(error as Exception)
                 }
             )
         )
