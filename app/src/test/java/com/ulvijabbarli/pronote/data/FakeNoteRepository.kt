@@ -7,12 +7,20 @@ import io.reactivex.Flowable
 class FakeNoteRepository : NoteRepository {
 
     private var noteServiceData: LinkedHashMap<Long, Note> = LinkedHashMap()
+    var returnError: Boolean = false
 
     override fun getAllNote(): Flowable<MutableList<Note>> {
+        if (returnError) {
+            return Flowable.error(Exception("Something went wrong"))
+        }
         return Flowable.just(noteServiceData.values.toMutableList())
     }
 
     override fun getNote(id: Long): Flowable<Note> {
+        if (returnError) {
+            return Flowable.error(Exception("Could not find note"))
+        }
+
         val note = noteServiceData[id]
 
         return if (note != null)
@@ -22,15 +30,34 @@ class FakeNoteRepository : NoteRepository {
     }
 
     override fun saveNote(note: Note): Completable {
-        return Completable.fromAction { noteServiceData[note.id] = note }
+        if (returnError) {
+            return Completable.error(Exception("Something went wrong"))
+        }
+
+        return try {
+            noteServiceData[note.id] = note
+            Completable.complete()
+        } catch (e: Exception) {
+            Completable.error(e)
+        }
     }
 
     override fun deleteNote(id: Long): Completable {
-        return Completable.fromAction { noteServiceData.remove(id) }
+        return try {
+            noteServiceData.remove(id)
+            Completable.complete()
+        } catch (e: Exception) {
+            Completable.error(e)
+        }
     }
 
     override fun deleteAllNote(): Completable {
-        return Completable.fromAction { noteServiceData.clear() }
+        return try {
+            noteServiceData.clear()
+            Completable.complete()
+        } catch (e: Exception) {
+            Completable.error(e)
+        }
     }
 
 }
