@@ -1,5 +1,6 @@
-package com.ulvijabbarli.pronote.data
+package com.ulvijabbarli.pronote
 
+import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.source.NoteRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
