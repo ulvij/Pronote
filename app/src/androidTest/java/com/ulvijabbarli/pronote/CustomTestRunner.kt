@@ -11,7 +11,7 @@ class CustomTestRunner:AndroidJUnitRunner() {
         className: String?,
         context: Context?
     ): Application {
-        return super.newApplication(cl, TestPronoteApplication::class.java.name, context)
+        return super.newApplication(cl, TestApplication::class.java.name, context)
     }
 
 }
