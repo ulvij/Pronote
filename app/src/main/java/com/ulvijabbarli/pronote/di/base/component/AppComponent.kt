@@ -1,7 +1,7 @@
 package com.ulvijabbarli.pronote.di.base.component
 
 import android.app.Application
-import com.ulvijabbarli.pronote.BaseApplication
+import com.ulvijabbarli.pronote.PronoteApplication
 import com.ulvijabbarli.pronote.di.base.builder.ActivityBuildersModule
 import com.ulvijabbarli.pronote.di.base.builder.ViewModelModule
 import com.ulvijabbarli.pronote.di.base.module.AppModule
@@ -22,7 +22,7 @@ import javax.inject.Singleton
         RoomModule::class
     ]
 )
-interface AppComponent : AndroidInjector<BaseApplication> {
+interface AppComponent : AndroidInjector<PronoteApplication> {
 
     @Component.Builder
     interface Builder {

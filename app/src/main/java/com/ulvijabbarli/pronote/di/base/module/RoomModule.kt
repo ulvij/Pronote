@@ -9,11 +9,11 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class RoomModule {
+open class RoomModule {
 
     @Singleton
     @Provides
-    fun getDatabase(context: Context): PronoteDatabase {
+    open fun getDatabase(context: Context): PronoteDatabase {
         return Room.databaseBuilder(
                 context.applicationContext,
                 PronoteDatabase::class.java,
@@ -24,7 +24,7 @@ class RoomModule {
 
     @Singleton
     @Provides
-    fun getNoteDao(pronoteDatabase: PronoteDatabase): NoteDao {
+    open fun getNoteDao(pronoteDatabase: PronoteDatabase): NoteDao {
         return pronoteDatabase.noteDao()
     }
 
