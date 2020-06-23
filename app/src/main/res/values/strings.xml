@@ -6,6 +6,7 @@
     <string name="note_hint">Note</string>
     <string name="title_warning">Warning!</string>
     <string name="message_are_you_sure_to_clear_all_notes">Are you sure to clear all notes?</string>
+    <string name="message_are_you_sure_to_delete_this_note">Are you sure to delete this note?</string>
     <string name="action_yes">Yes</string>
     <string name="action_no">No</string>
     <string name="message_note_created">Successfully created!</string>

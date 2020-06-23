@@ -1,6 +1,5 @@
 package com.ulvijabbarli.pronote.ui.main.notes
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +17,7 @@ import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
 import com.ulvijabbarli.pronote.util.Constants
 import com.ulvijabbarli.pronote.util.EventObserver
+import com.ulvijabbarli.pronote.util.showAlert
 import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_notes.*
@@ -53,10 +53,26 @@ class NotesFragment : DaggerFragment() {
         navController = Navigation.findNavController(view)
         notesViewModel =
             ViewModelProviders.of(this, viewModelProviderFactory).get(NotesViewModel::class.java)
-        image_clear_all.setOnClickListener { showAreYouSureToClearAllDialog() }
+        setUpClickListeners()
         setUpNotesAdapter()
         setUpObservers()
         notesViewModel.loadNoteList()
+
+    }
+
+    private fun setUpClickListeners() {
+        image_clear_all.setOnClickListener {
+            view?.showAlert(
+                getString(R.string.title_warning),
+                getString(R.string.message_are_you_sure_to_clear_all_notes),
+                { notesViewModel.clearAllNotes() })
+        }
+        float_add_note.setOnClickListener {
+            navController.navigate(
+                R.id.action_notesFragment_to_addEditNoteFragment,
+                bundleOf(Pair(Constants.title, getString(R.string.title_add_note)))
+            )
+        }
     }
 
     private fun setUpNotesAdapter() {
@@ -137,20 +153,6 @@ class NotesFragment : DaggerFragment() {
             recycler_view_notes.visibility = View.VISIBLE
             linear_empty.visibility = View.INVISIBLE
         }
-    }
-
-    private fun showAreYouSureToClearAllDialog() {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.title_warning))
-            .setMessage(getString(R.string.message_are_you_sure_to_clear_all_notes))
-            .setPositiveButton(getString(R.string.action_yes)) { dialog, _ ->
-                dialog.dismiss()
-                notesViewModel.clearAllNotes()
-            }
-            .setNegativeButton(getString(R.string.action_no)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
     }
 
 }

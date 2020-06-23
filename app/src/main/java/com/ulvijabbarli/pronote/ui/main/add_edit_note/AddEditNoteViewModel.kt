@@ -2,14 +2,11 @@ package com.ulvijabbarli.pronote.ui.main.add_edit_note
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
 import com.ulvijabbarli.pronote.data.source.NoteRepository
-import com.ulvijabbarli.pronote.util.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -19,8 +16,11 @@ class AddEditNoteViewModel @Inject constructor(
     var repository: NoteRepository
 ) : ViewModel() {
 
-    private var _noteUpdateEvent: MediatorLiveData<Resource<Boolean>> = MediatorLiveData()
+    private var _noteUpdateEvent: MutableLiveData<Resource<Boolean>> = MutableLiveData()
     val noteUpdateEvent = _noteUpdateEvent as LiveData<Resource<Boolean>>
+
+    private var _noteDeleteEvent = MutableLiveData<Resource<Boolean>>()
+    val noteDeleteEvent = _noteDeleteEvent as LiveData<Resource<Boolean>>
 
     private var _note = MutableLiveData<Resource<Note>>()
     val note = _note as LiveData<Resource<Note>>
@@ -35,7 +35,7 @@ class AddEditNoteViewModel @Inject constructor(
     }
 
     init {
-        Log.e(TAG, "Notes view model is working")
+        Log.e(TAG, "Add Edit Note view model started")
     }
 
     override fun onCleared() {
@@ -83,6 +83,28 @@ class AddEditNoteViewModel @Inject constructor(
         }
     }
 
+    fun deleteNote() {
+        if (isNewNote || currentNoteId == null) {
+            _noteDeleteEvent.value =
+                Resource.Error(RuntimeException("deleteNote() was called but note is new."))
+        }
+
+        _noteDeleteEvent.value = Resource.Loading
+
+        disposables.add(repository.deleteNote(currentNoteId!!.toLong())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    _noteDeleteEvent.value = Resource.Success(true)
+                },
+                {
+                    _noteDeleteEvent.value = Resource.Error(it as Exception)
+                }
+            ))
+
+    }
+
 
     private fun insertNote(note: Note) {
         _note.value = Resource.Loading
@@ -103,7 +125,8 @@ class AddEditNoteViewModel @Inject constructor(
 
     private fun updateNote(note: Note) {
         if (isNewNote || currentNoteId == null) {
-            throw RuntimeException("updateNote() was called but note is new.")
+            _noteUpdateEvent.value =
+                Resource.Error(RuntimeException("updateNote() was called but note is new."))
         }
 
         _note.value = Resource.Loading

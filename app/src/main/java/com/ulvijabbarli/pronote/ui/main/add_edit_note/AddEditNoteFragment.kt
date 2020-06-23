@@ -12,10 +12,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.ulvijabbarli.pronote.R
-import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
 import com.ulvijabbarli.pronote.util.Constants
 import com.ulvijabbarli.pronote.util.hideKeyboard
+import com.ulvijabbarli.pronote.util.showAlert
 import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_add_note.*
@@ -53,17 +53,28 @@ class AddEditNoteFragment : DaggerFragment() {
 
         initListeners()
         bindObservers()
+
         addEditNoteViewModel.start(arguments?.getString(Constants.noteId))
+        arguments?.getString(Constants.noteId)
+            ?.let { image_delete.visibility = View.VISIBLE }
+            ?: kotlin.run { image_delete.visibility = View.INVISIBLE }
     }
 
     private fun initListeners() {
         image_back.setOnClickListener { navController.popBackStack() }
-        image_save.setOnClickListener {
+        float_save_note.setOnClickListener {
             hideKeyboard()
             addEditNoteViewModel.saveNote(
                 text_note_title.text.trim().toString(),
                 text_note.text.trim().toString()
             )
+        }
+
+        image_delete.setOnClickListener {
+            view?.showAlert(
+                getString(R.string.title_warning),
+                getString(R.string.message_are_you_sure_to_delete_this_note),
+                { addEditNoteViewModel.deleteNote() })
         }
     }
 
@@ -98,6 +109,22 @@ class AddEditNoteFragment : DaggerFragment() {
                     is Resource.Error -> {
                         controlLoading(false)
                         showError(resource.exception.message)
+                    }
+                    Resource.Loading -> controlLoading(true)
+                }
+            }
+        })
+
+        addEditNoteViewModel.noteDeleteEvent.observe(viewLifecycleOwner, Observer { deleteNoteResource ->
+            if (deleteNoteResource != null) {
+                when (deleteNoteResource) {
+                    is Resource.Success -> {
+                        controlLoading(false)
+                        navController.popBackStack()
+                    }
+                    is Resource.Error -> {
+                        controlLoading(false)
+                        showError(deleteNoteResource.exception.message)
                     }
                     Resource.Loading -> controlLoading(true)
                 }

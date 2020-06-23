@@ -2,7 +2,6 @@ package com.ulvijabbarli.pronote.ui.main.notes
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ulvijabbarli.pronote.data.Note
@@ -25,14 +24,14 @@ class NotesViewModel @Inject constructor(var repository: NoteRepository) : ViewM
     private var _openNoteDetail = MutableLiveData<Event<Note>>()
     val openNoteDetail = _openNoteDetail as LiveData<Event<Note>>
 
-    var notesCompositeDisposable: CompositeDisposable = CompositeDisposable()
+    private var notesCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     companion object {
         val TAG = NotesViewModel::class.qualifiedName
     }
 
     init {
-        Log.e(TAG, "init notes view model")
+        Log.e(TAG, "Notes view model started")
     }
 
     override fun onCleared() {
