@@ -9,22 +9,22 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-open class RoomModule {
+class RoomModule {
 
     @Singleton
     @Provides
-    open fun getDatabase(context: Context): PronoteDatabase {
+    fun getDatabase(context: Context): PronoteDatabase {
         return Room.databaseBuilder(
-                context.applicationContext,
-                PronoteDatabase::class.java,
-                PronoteDatabase.DATABASE_NAME
-            ).fallbackToDestructiveMigration()
+            context.applicationContext,
+            PronoteDatabase::class.java,
+            PronoteDatabase.DATABASE_NAME
+        ).fallbackToDestructiveMigration()
             .build()
     }
 
     @Singleton
     @Provides
-    open fun getNoteDao(pronoteDatabase: PronoteDatabase): NoteDao {
+    fun getNoteDao(pronoteDatabase: PronoteDatabase): NoteDao {
         return pronoteDatabase.noteDao()
     }
 

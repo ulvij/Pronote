@@ -12,8 +12,9 @@ import androidx.test.filters.MediumTest
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.TestApplication
 import com.ulvijabbarli.pronote.data.Note
+import com.ulvijabbarli.pronote.data.source.NoteRepository
 import com.ulvijabbarli.pronote.ui.main.MainActivity
-import org.junit.Rule
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -21,18 +22,38 @@ import org.junit.runner.RunWith
 @MediumTest
 class NotesFragmentTest {
 
-    private var notesRepository = TestApplication.appComponent().noteRepository()
+    private lateinit var notesRepository: NoteRepository
+
+    @Before
+    fun setUp() {
+        notesRepository = TestApplication.appComponent().noteRepository()
+    }
+
 
     @Test
     fun displayNotes_whenRepositoryHasData() {
 
-        notesRepository.saveNote(Note(title = "TITLE1", description = "DESC1"))
+        notesRepository.saveNote(Note(id = 1, title = "TITLE1", description = "DESC1"))
 
         launchActivity()
 
         onView(withText("TITLE1")).check(matches(isDisplayed()))
 
     }
+
+    @Test
+    fun showAllNotes() {
+
+        notesRepository.saveNote(Note(id = 1, title = "TITLE1", description = "DESC1"))
+        notesRepository.saveNote(Note(id = 2, title = "TITLE2", description = "DESC2"))
+
+        launchActivity()
+
+        onView(withText("TITLE1")).check(matches(isDisplayed()))
+        onView(withText("TITLE2")).check(matches(isDisplayed()))
+
+    }
+
 
     private fun launchActivity(): ActivityScenario<MainActivity>? {
         val activityScenario = launch(MainActivity::class.java)
