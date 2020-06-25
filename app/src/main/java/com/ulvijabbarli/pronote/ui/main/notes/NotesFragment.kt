@@ -38,15 +38,10 @@ class NotesFragment : DaggerFragment() {
     private lateinit var navController: NavController
     private lateinit var notesAdapter: NotesAdapter
 
-    companion object {
-        val TAG = NotesFragment::class.java.name
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_notes, container, false)
     }
 
@@ -58,7 +53,6 @@ class NotesFragment : DaggerFragment() {
         setUpNotesAdapter()
         setUpObservers()
         notesViewModel.loadNoteList()
-
     }
 
     private fun setUpClickListeners() {

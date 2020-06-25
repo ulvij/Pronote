@@ -49,18 +49,22 @@ class AddEditNoteFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController(view)
 
-        text_title.text = arguments?.getString(Constants.title)
-
-        initListeners()
-        bindObservers()
-
+        setUpBaseData()
+        setUpListeners()
+        setUpObservers()
         addEditNoteViewModel.start(arguments?.getString(Constants.noteId))
-        arguments?.getString(Constants.noteId)
-            ?.let { image_delete.visibility = View.VISIBLE }
-            ?: kotlin.run { image_delete.visibility = View.INVISIBLE }
     }
 
-    private fun initListeners() {
+    private fun setUpBaseData() {
+        arguments?.let { args ->
+            text_title.text = args.getString(Constants.title)
+            args.getString(Constants.noteId)
+                ?.let { image_delete.visibility = View.VISIBLE }
+                ?: kotlin.run { image_delete.visibility = View.INVISIBLE }
+        }
+    }
+
+    private fun setUpListeners() {
         image_back.setOnClickListener { navController.popBackStack() }
         float_save_note.setOnClickListener {
             hideKeyboard()
@@ -78,7 +82,7 @@ class AddEditNoteFragment : DaggerFragment() {
         }
     }
 
-    private fun bindObservers() {
+    private fun setUpObservers() {
         addEditNoteViewModel.note
             .observe(viewLifecycleOwner, Observer { noteResource ->
                 if (noteResource != null) {
