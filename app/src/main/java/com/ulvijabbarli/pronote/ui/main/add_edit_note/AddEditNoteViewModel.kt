@@ -35,7 +35,7 @@ class AddEditNoteViewModel @Inject constructor(
     }
 
     init {
-        Log.e(TAG, "Add Edit Note view model started")
+        Log.d(TAG, "Add Edit Note view model started")
     }
 
     override fun onCleared() {

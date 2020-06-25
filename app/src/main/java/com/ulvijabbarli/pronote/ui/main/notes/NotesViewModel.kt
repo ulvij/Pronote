@@ -31,7 +31,7 @@ class NotesViewModel @Inject constructor(var repository: NoteRepository) : ViewM
     }
 
     init {
-        Log.e(TAG, "Notes view model started")
+        Log.d(TAG, "Notes view model started")
     }
 
     override fun onCleared() {
