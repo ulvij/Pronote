@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -15,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
+import com.ulvijabbarli.pronote.ui.main.MainActivity
 import com.ulvijabbarli.pronote.util.Constants
 import com.ulvijabbarli.pronote.util.EventObserver
 import com.ulvijabbarli.pronote.util.showAlert
@@ -28,12 +30,13 @@ import javax.inject.Inject
  */
 class NotesFragment : DaggerFragment() {
 
-    private lateinit var notesViewModel: NotesViewModel
-    private lateinit var navController: NavController
-    private lateinit var notesAdapter: NotesAdapter
-
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    private val notesViewModel: NotesViewModel by viewModels { viewModelProviderFactory }
+
+    private lateinit var navController: NavController
+    private lateinit var notesAdapter: NotesAdapter
 
     companion object {
         val TAG = NotesFragment::class.java.name
@@ -51,8 +54,6 @@ class NotesFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        notesViewModel =
-            ViewModelProviders.of(this, viewModelProviderFactory).get(NotesViewModel::class.java)
         setUpClickListeners()
         setUpNotesAdapter()
         setUpObservers()
