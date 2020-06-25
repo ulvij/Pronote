@@ -1,4 +1,4 @@
-# **Pronote**
+<h1 align="center">Pronote</h1>
 
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
@@ -24,7 +24,7 @@ The goal of the project is to demonstrate  the **Testing** of these technologies
 - Material Design
 
 
-## Tech-stack
+## Tech-stack & Open-source libraries
 
 Min API level is set to [21](https://android-arsenal.com/api?level=21#l21), so the presented approach is suitable for over 85% of devices running Android. This project takes advantage of many popular libraries and tools of the Android ecosystem. Most of the libraries are in the stable version unless there is a good reason to use non-stable dependency.
 
@@ -49,13 +49,13 @@ Min API level is set to [21](https://android-arsenal.com/api?level=21#l21), so t
     * Instrumentation Test
       * [Espresso](https://developer.android.com/training/testing/espresso) -Espresso is an entire testing framework that allows you to test the UI of your Android app.
 
-- **Architecture**
+## Architecture
     Pronote implements MVVM architecture with the repository pattern    
  
 ![architecture](https://user-images.githubusercontent.com/24237865/77502018-f7d36000-6e9c-11ea-92b0-1097240c8689.png)
 
 
-## Find this repository useful?
+## Find this useful?
 Support it by giving :star: for this repository
 
 ## License
