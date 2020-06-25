@@ -1,12 +1,16 @@
-package com.ulvijabbarli.pronote.data
+package com.ulvijabbarli.pronote
 
+import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.source.NoteRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Observable
 
 class FakeNoteRepository : NoteRepository {
 
+    private val lock = Any()
     private var noteServiceData: LinkedHashMap<Long, Note> = LinkedHashMap()
+    var observable = Observable.fromArray(noteServiceData.values)
     var returnError: Boolean = false
 
     override fun getAllNote(): Flowable<MutableList<Note>> {
@@ -36,6 +40,7 @@ class FakeNoteRepository : NoteRepository {
 
         return try {
             noteServiceData[note.id] = note
+            refreshObservable()
             Completable.complete()
         } catch (e: Exception) {
             Completable.error(e)
@@ -45,6 +50,7 @@ class FakeNoteRepository : NoteRepository {
     override fun deleteNote(id: Long): Completable {
         return try {
             noteServiceData.remove(id)
+            refreshObservable()
             Completable.complete()
         } catch (e: Exception) {
             Completable.error(e)
@@ -52,11 +58,29 @@ class FakeNoteRepository : NoteRepository {
     }
 
     override fun deleteAllNote(): Completable {
+        if (returnError) {
+            return Completable.error(Exception("Could not delete all notes"))
+        }
+
         return try {
             noteServiceData.clear()
+            refreshObservable()
             Completable.complete()
         } catch (e: Exception) {
             Completable.error(e)
+        }
+    }
+
+    private fun refreshObservable() {
+        observable
+            .mergeWith(Observable.just(noteServiceData.values))
+            .distinct()
+    }
+
+    fun resetRepository() {
+        synchronized(lock) {
+            returnError = false
+            deleteAllNote()
         }
     }
 

@@ -15,10 +15,10 @@ class RoomModule {
     @Provides
     fun getDatabase(context: Context): PronoteDatabase {
         return Room.databaseBuilder(
-                context.applicationContext,
-                PronoteDatabase::class.java,
-                PronoteDatabase.DATABASE_NAME
-            ).fallbackToDestructiveMigration()
+            context.applicationContext,
+            PronoteDatabase::class.java,
+            PronoteDatabase.DATABASE_NAME
+        ).fallbackToDestructiveMigration()
             .build()
     }
 

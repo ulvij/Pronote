@@ -1,11 +1,11 @@
-package com.ulvijabbarli.pronote.di.base.component
+package com.ulvijabbarli.pronote.di.component
 
 import android.app.Application
-import com.ulvijabbarli.pronote.PronoteApplication
+import com.ulvijabbarli.pronote.TestApplication
+import com.ulvijabbarli.pronote.data.source.NoteRepository
 import com.ulvijabbarli.pronote.di.base.builder.ActivityBuildersModule
 import com.ulvijabbarli.pronote.di.base.builder.ViewModelModule
-import com.ulvijabbarli.pronote.di.base.module.AppModule
-import com.ulvijabbarli.pronote.di.base.module.RoomModule
+import com.ulvijabbarli.pronote.di.module.TestAppModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -18,11 +18,12 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ActivityBuildersModule::class,
         ViewModelModule::class,
-        AppModule::class,
-        RoomModule::class
+        TestAppModule::class
     ]
 )
-interface AppComponent : AndroidInjector<PronoteApplication> {
+interface TestApplicationComponent : AndroidInjector<TestApplication> {
+
+    fun noteRepository():NoteRepository
 
     @Component.Builder
     interface Builder {
@@ -30,6 +31,8 @@ interface AppComponent : AndroidInjector<PronoteApplication> {
         @BindsInstance
         fun application(application: Application): Builder
 
-        fun build(): AppComponent
+        fun build(): TestApplicationComponent
+
     }
+
 }

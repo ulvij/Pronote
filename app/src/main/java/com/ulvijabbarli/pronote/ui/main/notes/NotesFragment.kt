@@ -1,6 +1,5 @@
 package com.ulvijabbarli.pronote.ui.main.notes
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -16,8 +16,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
+import com.ulvijabbarli.pronote.ui.main.MainActivity
 import com.ulvijabbarli.pronote.util.Constants
 import com.ulvijabbarli.pronote.util.EventObserver
+import com.ulvijabbarli.pronote.util.showAlert
 import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_notes.*
@@ -28,22 +30,18 @@ import javax.inject.Inject
  */
 class NotesFragment : DaggerFragment() {
 
-    private lateinit var notesViewModel: NotesViewModel
-    private lateinit var navController: NavController
-    private lateinit var notesAdapter: NotesAdapter
-
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
-    companion object {
-        val TAG = NotesFragment::class.java.name
-    }
+    private val notesViewModel: NotesViewModel by viewModels { viewModelProviderFactory }
+
+    private lateinit var navController: NavController
+    private lateinit var notesAdapter: NotesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_notes, container, false)
     }
 
@@ -51,12 +49,25 @@ class NotesFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        notesViewModel =
-            ViewModelProviders.of(this, viewModelProviderFactory).get(NotesViewModel::class.java)
-        image_clear_all.setOnClickListener { showAreYouSureToClearAllDialog() }
+        setUpClickListeners()
         setUpNotesAdapter()
         setUpObservers()
         notesViewModel.loadNoteList()
+    }
+
+    private fun setUpClickListeners() {
+        image_clear_all.setOnClickListener {
+            view?.showAlert(
+                getString(R.string.title_warning),
+                getString(R.string.message_are_you_sure_to_clear_all_notes),
+                { notesViewModel.clearAllNotes() })
+        }
+        float_add_note.setOnClickListener {
+            navController.navigate(
+                R.id.action_notesFragment_to_addEditNoteFragment,
+                bundleOf(Pair(Constants.title, getString(R.string.title_add_note)))
+            )
+        }
     }
 
     private fun setUpNotesAdapter() {
@@ -137,20 +148,6 @@ class NotesFragment : DaggerFragment() {
             recycler_view_notes.visibility = View.VISIBLE
             linear_empty.visibility = View.INVISIBLE
         }
-    }
-
-    private fun showAreYouSureToClearAllDialog() {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.title_warning))
-            .setMessage(getString(R.string.message_are_you_sure_to_clear_all_notes))
-            .setPositiveButton(getString(R.string.action_yes)) { dialog, _ ->
-                dialog.dismiss()
-                notesViewModel.clearAllNotes()
-            }
-            .setNegativeButton(getString(R.string.action_no)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
     }
 
 }

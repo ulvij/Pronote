@@ -15,7 +15,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.ulvijabbarli.pronote.util.CustomTestRunner"
     }
 
     compileOptions {
@@ -23,8 +23,22 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+
     androidExtensions {
         experimental = true
+    }
+
+    sourceSets {
+        androidTest {
+            java.srcDirs += "src/sharedTest/java"
+        }
+        test {
+            java.srcDirs += "src/sharedTest/java"
+        }
     }
 
     packagingOptions {
@@ -62,19 +76,21 @@ android {
 }
 
 dependencies {
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // -- KOTLIN
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.kotlinReflect"
 
-    // App dependencies
+
+    // -- APP DEPENDENCIES
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
+    implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayout"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.legacySupportV4Version"
 
-    // Architecture Components
+
+    // -- ARCHITECTURE COMPONENTS
     // Room
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
@@ -92,21 +108,22 @@ dependencies {
     implementation "androidx.navigation:navigation-runtime:$rootProject.navVersion"
 
 
-    // Dependencies for local unit tests
+    // -- DEPENDENCIES FOR LOCAL UNIT TESTS
     // Required -- JUnit 4 framework
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     testImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
     // Robolectric environment
     testImplementation "org.robolectric:robolectric:$rootProject.robolectricVersion"
     // Mockito
-    testImplementation "org.mockito:mockito-core:2.19.0"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
     // Truth
     testImplementation "com.google.truth:truth:$rootProject.truthVersion"
     // AndroidX Test - JVM testing
     testImplementation "androidx.test.ext:junit-ktx:$rootProject.androidXTestExtKotlinRunnerVersion"
     testImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
 
-    // Dependencies for Android instrumented unit tests
+
+    // -- DEPENDENCIES FOR ANDROID INSTRUMENTED UNIT TESTS
     androidTestImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
     // Room - testing
@@ -114,23 +131,24 @@ dependencies {
     // AndroidX Test - Instrumented testing
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtJUnitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.androidXTestEspressoCoreVersion"
-
     // Dagger
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+
+
+    // -- DAGGER
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
 
-    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
 
+    // -- REACTIVE
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rx_java_version"
-
     // RxAndroid
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rx_android_version"
-
     // Reactive Streams (convert Observable to LiveData)
     implementation "android.arch.lifecycle:reactivestreams:$rootProject.reactivestreams_version"
 

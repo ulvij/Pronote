@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth
 import com.ulvijabbarli.pronote.RxSchedulerRule
-import com.ulvijabbarli.pronote.data.FakeNoteRepository
+import com.ulvijabbarli.pronote.FakeNoteRepository
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
 import com.ulvijabbarli.pronote.getOrAwaitValue
