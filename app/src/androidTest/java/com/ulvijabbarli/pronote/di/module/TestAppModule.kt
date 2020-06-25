@@ -4,7 +4,6 @@ import com.ulvijabbarli.pronote.FakeNoteRepository
 import com.ulvijabbarli.pronote.data.source.NoteRepository
 import dagger.Module
 import dagger.Provides
-import org.mockito.Mockito
 import javax.inject.Singleton
 
 @Module

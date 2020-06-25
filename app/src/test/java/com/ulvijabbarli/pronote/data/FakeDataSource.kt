@@ -6,8 +6,10 @@ import io.reactivex.Flowable
 
 class FakeDataSource(private var notes: MutableList<Note> = mutableListOf()) : NotesDataSource {
 
+    var observable = Flowable.fromArray(notes)
+
     override fun getAllNote(): Flowable<MutableList<Note>> {
-        return Flowable.just(notes)
+        return observable
     }
 
     override fun getNote(id: Long): Flowable<Note> {
@@ -22,6 +24,7 @@ class FakeDataSource(private var notes: MutableList<Note> = mutableListOf()) : N
     override fun saveNote(note: Note): Completable {
         return notes.let {
             it.add(note)
+            refreshObservable()
             Completable.complete()
         }
     }
@@ -31,16 +34,20 @@ class FakeDataSource(private var notes: MutableList<Note> = mutableListOf()) : N
         return if (note == null)
             Completable.error(Exception("Could not find this note"))
         else {
-            Completable.fromAction {
-                notes.remove(note)
-            }
+            notes.remove(note)
+            refreshObservable()
+            Completable.complete()
         }
     }
 
     override fun deleteAllNote(): Completable {
-        return Completable.fromAction {
-            notes.clear()
-        }
+        notes.clear()
+        refreshObservable()
+        return Completable.complete()
+    }
+
+    private fun refreshObservable() {
+        observable = Flowable.fromArray(notes)
     }
 
 

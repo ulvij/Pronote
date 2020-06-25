@@ -32,12 +32,14 @@
                 android:visibility="invisible">
 
                 <ImageView
+                    android:id="@+id/image_empty_note"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:padding="20dp"
                     android:src="@drawable/ic_empty_note" />
 
                 <TextView
+                    android:id="@+id/text_empty_note"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
