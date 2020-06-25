@@ -50,7 +50,7 @@ Min API level is set to [21](https://android-arsenal.com/api?level=21#l21), so t
       * [Espresso](https://developer.android.com/training/testing/espresso) -Espresso is an entire testing framework that allows you to test the UI of your Android app.
 
 ## Architecture
-    Pronote implements MVVM architecture with the repository pattern    
+   Pronote implements MVVM architecture with the repository pattern    
  
 ![architecture](https://user-images.githubusercontent.com/24237865/77502018-f7d36000-6e9c-11ea-92b0-1097240c8689.png)
 
