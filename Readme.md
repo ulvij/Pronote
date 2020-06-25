@@ -1,6 +1,12 @@
 # **Pronote**
 
 <p align="center">
+  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
+  <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
+  <a href="https://github.com/ulvij"><img alt="Profile" src="https://img.shields.io/badge/github-ulvij-green"/></a> 
+</p>
+
+<p align="center">
     <img src="/preview/screenshot.png"/>
 </p>
 
@@ -33,11 +39,7 @@ Min API level is set to [21](https://android-arsenal.com/api?level=21#l21), so t
         * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - notify views about database change
         * [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle) - perform an action when lifecycle state changes
         * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - store and manage UI-related data in a lifecycle conscious way
-
-- **Architecture**
-    * MVVM Architecture
-    * Android Architecture components([ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel), [LiveData](https://developer.android.com/topic/libraries/architecture/livedata), [Navigation](https://developer.android.com/topic/libraries/architecture/navigation/))
-
+        
 - **Testing**
     * Unit Test
       * [JUnit](https://junit.org/junit5/) - JUnit is a unit testing framework
@@ -47,6 +49,14 @@ Min API level is set to [21](https://android-arsenal.com/api?level=21#l21), so t
     * Instrumentation Test
       * [Espresso](https://developer.android.com/training/testing/espresso) -Espresso is an entire testing framework that allows you to test the UI of your Android app.
 
+- **Architecture**
+    Pronote implements MVVM architecture with the repository pattern    
+ 
+![architecture](https://user-images.githubusercontent.com/24237865/77502018-f7d36000-6e9c-11ea-92b0-1097240c8689.png)
+
+
+## Find this repository useful?
+Support it by giving :star: for this repository
 
 ## License
 ```
