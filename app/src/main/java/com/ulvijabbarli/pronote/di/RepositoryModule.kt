@@ -1,18 +1,20 @@
-package com.ulvijabbarli.pronote.di.base.module
+package com.ulvijabbarli.pronote.di
 
-import android.app.Application
-import android.content.Context
 import com.ulvijabbarli.pronote.data.source.DefaultNoteRepository
 import com.ulvijabbarli.pronote.data.source.NoteRepository
 import com.ulvijabbarli.pronote.data.source.local.NotesDataSource
 import com.ulvijabbarli.pronote.data.source.local.NotesLocalDataSource
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-
 @Module
-class AppModule {
+@InstallIn(SingletonComponent::class)
+class RepositoryModule {
 
     @Provides
     @Singleton
@@ -24,12 +26,6 @@ class AppModule {
     @Singleton
     fun provideDataSource(notesLocalDataSource: NotesLocalDataSource): NotesDataSource {
         return notesLocalDataSource
-    }
-
-    @Provides
-    @Singleton
-    fun provideContext(application: Application): Context {
-        return application
     }
 
 }

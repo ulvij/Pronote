@@ -1,10 +1,13 @@
 package com.ulvijabbarli.pronote.ui.main
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.ulvijabbarli.pronote.R
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : DaggerAppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

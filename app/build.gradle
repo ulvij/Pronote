@@ -6,6 +6,9 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'dagger.hilt.android.plugin'
+
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -131,18 +134,17 @@ dependencies {
     // AndroidX Test - Instrumented testing
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtJUnitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.androidXTestEspressoCoreVersion"
-    // Dagger
-    kaptAndroidTest "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
-    kaptAndroidTest "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
 
 
-    // -- DAGGER
-    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
-    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
-
+    // -- DAGGER HILT
+    implementation "com.google.dagger:hilt-android:$rootProject.daggerHiltAndroidVersion"
+    implementation "com.google.dagger:hilt-android-testing:$rootProject.daggerHiltAndroidVersion"
+    implementation "androidx.hilt:hilt-common:$rootProject.daggerHiltVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.daggerHiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidVersion"
+    kapt "androidx.hilt:hilt-compiler:$rootProject.daggerHiltVersion"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.daggerHiltAndroidVersion"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidVersion"
 
     // -- REACTIVE
     // RxJava

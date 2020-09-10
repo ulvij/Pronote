@@ -1,20 +1,15 @@
 package com.ulvijabbarli.pronote.data.source
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.MutableLiveData
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.source.local.NotesDataSource
 import io.reactivex.Completable
-import io.reactivex.CompletableObserver
 import io.reactivex.Flowable
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class DefaultNoteRepository @Inject constructor(
-    var notesDataSource: NotesDataSource
+    private val notesDataSource: NotesDataSource
 ) : NoteRepository {
 
     companion object {

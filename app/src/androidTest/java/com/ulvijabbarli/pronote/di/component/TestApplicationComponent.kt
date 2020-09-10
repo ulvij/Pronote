@@ -3,8 +3,6 @@ package com.ulvijabbarli.pronote.di.component
 import android.app.Application
 import com.ulvijabbarli.pronote.TestApplication
 import com.ulvijabbarli.pronote.data.source.NoteRepository
-import com.ulvijabbarli.pronote.di.base.builder.ActivityBuildersModule
-import com.ulvijabbarli.pronote.di.base.builder.ViewModelModule
 import com.ulvijabbarli.pronote.di.module.TestAppModule
 import dagger.BindsInstance
 import dagger.Component

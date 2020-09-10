@@ -1,6 +1,7 @@
 package com.ulvijabbarli.pronote.ui.main.add_edit_note
 
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class AddEditNoteViewModel @Inject constructor(
+class AddEditNoteViewModel @ViewModelInject constructor(
     var repository: NoteRepository
 ) : ViewModel() {
 
