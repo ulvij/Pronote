@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="4dp"
-
     android:background="@drawable/border"
     android:theme="@style/Theme.MaterialComponents.DayNight">
 
