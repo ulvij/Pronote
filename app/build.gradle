@@ -1,13 +1,8 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
-
 apply plugin: 'dagger.hilt.android.plugin'
-
 
 android {
     compileSdkVersion 29
@@ -29,7 +24,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-
 
     androidExtensions {
         experimental = true
@@ -72,16 +66,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+}
 
-    useLibrary 'android.test.runner'
-    useLibrary 'android.test.base'
-    useLibrary 'android.test.mock'
+configurations.all {
+    resolutionStrategy {
+        force group: 'androidx.test', name: 'monitor', version: '1.2.0'
+    }
 }
 
 dependencies {
     // -- KOTLIN
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.kotlinReflect"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.kotlin_version"
 
 
     // -- APP DEPENDENCIES
@@ -99,42 +95,30 @@ dependencies {
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     implementation "androidx.room:room-rxjava2:$rootProject.roomVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.archLifecycleVersion"
     // ViewModel Kotlin support
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.archLifecycleVersion"
     // architecture comp. navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navVersionKtx"
     implementation "androidx.navigation:navigation-fragment:$rootProject.navVersion"
-    implementation "androidx.navigation:navigation-ui:$rootProject.navVersion"
-    implementation "androidx.navigation:navigation-runtime:$rootProject.navVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navVersionKtx"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navVersion"
+    implementation "androidx.navigation:navigation-runtime-ktx:$rootProject.navVersion"
 
 
     // -- DEPENDENCIES FOR LOCAL UNIT TESTS
-    // Required -- JUnit 4 framework
     testImplementation "junit:junit:$rootProject.jUnitVersion"
-    testImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
-    // Robolectric environment
-    testImplementation "org.robolectric:robolectric:$rootProject.robolectricVersion"
-    // Mockito
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
-    // Truth
+    testImplementation "org.robolectric:robolectric:$rootProject.robolectricVersion"
     testImplementation "com.google.truth:truth:$rootProject.truthVersion"
-    // AndroidX Test - JVM testing
+    testImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
     testImplementation "androidx.test.ext:junit-ktx:$rootProject.androidXTestExtKotlinRunnerVersion"
-    testImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
-
-
-    // -- DEPENDENCIES FOR ANDROID INSTRUMENTED UNIT TESTS
-    androidTestImplementation "junit:junit:$rootProject.jUnitVersion"
+    debugImplementation("androidx.test:core:$rootProject.androidXTest")
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
-    // Room - testing
-    androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
-    // AndroidX Test - Instrumented testing
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtJUnitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.androidXTestEspressoCoreVersion"
-
 
     // -- DAGGER HILT
     implementation "com.google.dagger:hilt-android:$rootProject.daggerHiltAndroidVersion"
@@ -147,11 +131,8 @@ dependencies {
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidVersion"
 
     // -- REACTIVE
-    // RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rx_java_version"
-    // RxAndroid
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rx_android_version"
-    // Reactive Streams (convert Observable to LiveData)
     implementation "android.arch.lifecycle:reactivestreams:$rootProject.reactivestreams_version"
 
 }

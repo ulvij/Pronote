@@ -1,10 +1,9 @@
-package com.ulvijabbarli.pronote.data.local
+package com.ulvijabbarli.pronote.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.source.local.NoteDao
 import com.ulvijabbarli.pronote.data.source.local.PronoteDatabase
 import io.reactivex.functions.Predicate

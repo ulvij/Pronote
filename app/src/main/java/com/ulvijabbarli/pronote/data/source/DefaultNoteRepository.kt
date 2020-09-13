@@ -25,6 +25,7 @@ class DefaultNoteRepository @Inject constructor(
     }
 
     override fun saveNote(note: Note): Completable {
+        println("LOG_DEBUG-->DEFAULT--$note")
         return notesDataSource.saveNote(note)
     }
 
