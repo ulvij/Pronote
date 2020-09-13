@@ -1,16 +1,16 @@
-package com.ulvijabbarli.pronote.ui.main.add_edit_note
+package com.ulvijabbarli.pronote.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth
-import com.ulvijabbarli.pronote.RxSchedulerRule
 import com.ulvijabbarli.pronote.FakeNoteRepository
+import com.ulvijabbarli.pronote.RxSchedulerRule
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
 import com.ulvijabbarli.pronote.getOrAwaitValue
+import com.ulvijabbarli.pronote.ui.main.add_edit_note.AddEditNoteViewModel
 import io.reactivex.functions.Predicate
 import org.junit.Before
-
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

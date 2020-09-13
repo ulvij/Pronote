@@ -1,4 +1,4 @@
-package com.ulvijabbarli.pronote.ui.main.add_edit_note
+package com.ulvijabbarli.pronote.ui
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
@@ -11,21 +11,30 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.ulvijabbarli.pronote.FakeNoteRepository
 import com.ulvijabbarli.pronote.R
-import com.ulvijabbarli.pronote.TestApplication
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.source.NoteRepository
 import com.ulvijabbarli.pronote.ui.main.MainActivity
+import com.ulvijabbarli.pronote.util.RecyclerViewItemCountAssertion
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import javax.inject.Inject
 
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
+@HiltAndroidTest
 class AddEditNoteFragmentTest {
 
-    private lateinit var notesRepository: NoteRepository
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var notesRepository: NoteRepository
 
     private fun launchActivity(): ActivityScenario<MainActivity>? {
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
@@ -38,23 +47,16 @@ class AddEditNoteFragmentTest {
 
     @Before
     fun setUp() {
-        notesRepository = TestApplication.appComponent().noteRepository()
+        hiltRule.inject()
     }
 
     @After
     fun clear() {
-        (notesRepository as FakeNoteRepository).resetRepository()
+        notesRepository.deleteAllNote().blockingAwait()
     }
 
     @Test
     fun createNewNote_success() {
-        // check that there are no any notes
-        notesRepository.getAllNote()
-            .test()
-            .assertValue {
-                return@assertValue it.size == 0
-            }
-
         launchActivity()
 
         // open add note fragment and type not details
@@ -65,34 +67,9 @@ class AddEditNoteFragmentTest {
         onView(withId(R.id.float_save_note)).perform(click())
 
         // verify that note is created
-        notesRepository.getAllNote()
-            .test()
-            .assertValue {
-                return@assertValue it.size == 1
-            }
-    }
+        onView(withText("New Note Title")).check(matches(isDisplayed()))
+        onView(withText("New Note")).check(matches(isDisplayed()))
 
-    @Test
-    fun createNewNote_error() {
-        launchActivity()
-
-        // open add note fragment and type not details
-        onView(withId(R.id.float_add_note)).perform(click())
-        onView(withId(R.id.text_note_title)).perform(typeText("New Note Title"))
-        onView(withId(R.id.text_note)).perform(typeText("New Note"))
-
-        // set flat for return error when save note
-        (notesRepository as FakeNoteRepository).returnError = true
-
-        onView(withId(R.id.float_save_note)).perform(click())
-
-        // verify that note is not created
-        notesRepository.getAllNote()
-            .test()
-            ?.assertNoValues()
-
-        // verify that Snackbar displayed
-        onView(withText("Something went wrong")).check(matches(isDisplayed()))
     }
 
     @Test
@@ -123,7 +100,7 @@ class AddEditNoteFragmentTest {
 
     @Test
     fun checkDeleteButtonVisibility_EditNoteCase() {
-        notesRepository.saveNote(Note(id = 1, title = "TITLE", description = "DESC1"))
+        notesRepository.saveNote(Note(id = 1, title = "TITLE", description = "DESC1")).blockingAwait()
 
         launchActivity()
 
@@ -137,45 +114,41 @@ class AddEditNoteFragmentTest {
 
     @Test
     fun acceptToDeleteNote() {
-        notesRepository.saveNote(Note(id = 1, title = "TITLE", description = "DESC1"))
+        notesRepository.saveNote(Note(id = 1, title = "TITLE", description = "DESC1")).blockingAwait()
 
         launchActivity()
 
         // open note details page
         onView(withText("TITLE")).perform(click())
-
 
         // click to delete note
         onView(withId(R.id.image_delete)).perform(click())
         onView(withText("Yes")).perform(click())
 
         // verify that the note is deleted
-        notesRepository.getNote(1)
-            .test()
-            .assertNoValues()
+        onView(withId(R.id.linear_empty)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.image_empty_note)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.text_empty_note)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.recycler_view_notes)).check(RecyclerViewItemCountAssertion(0))
 
     }
 
     @Test
     fun cancelToDeleteNote() {
-        notesRepository.saveNote(Note(id = 1, title = "TITLE", description = "DESC"))
+        notesRepository.saveNote(Note(id = 1, title = "TITLE", description = "DESC")).blockingAwait()
 
         launchActivity()
 
         // open note details page
         onView(withText("TITLE")).perform(click())
 
-
         // click to delete note
         onView(withId(R.id.image_delete)).perform(click())
         onView(withText("No")).perform(click())
 
-        // verify that the note is deleted
-        notesRepository.getNote(1)
-            .test()
-            .assertValue {
-                return@assertValue (it.title == "TITLE" && it.description == "DESC")
-            }
+        // verify that the note is not deleted
+        onView(withText("TITLE")).check(matches(isDisplayed()))
+        onView(withText("DESC")).check(matches(isDisplayed()))
 
     }
 

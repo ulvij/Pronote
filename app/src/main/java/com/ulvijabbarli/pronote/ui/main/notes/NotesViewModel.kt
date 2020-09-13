@@ -1,6 +1,7 @@
 package com.ulvijabbarli.pronote.ui.main.notes
 
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class NotesViewModel @Inject constructor(var repository: NoteRepository) : ViewModel() {
+class NotesViewModel @ViewModelInject constructor(var repository: NoteRepository) : ViewModel() {
 
     private var _notes = MutableLiveData<Resource<List<Note>>>()
     val notes = _notes as LiveData<Resource<List<Note>>>

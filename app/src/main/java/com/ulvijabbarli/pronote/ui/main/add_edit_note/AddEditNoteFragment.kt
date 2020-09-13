@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -17,20 +16,16 @@ import com.ulvijabbarli.pronote.data.Resource
 import com.ulvijabbarli.pronote.util.Constants
 import com.ulvijabbarli.pronote.util.hideKeyboard
 import com.ulvijabbarli.pronote.util.showAlert
-import com.ulvijabbarli.pronote.util.viewmodel.ViewModelProviderFactory
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_note.*
-import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
-class AddEditNoteFragment : DaggerFragment() {
+@AndroidEntryPoint
+class AddEditNoteFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelProviderFactory: ViewModelProviderFactory
-
-    private val addEditNoteViewModel: AddEditNoteViewModel by viewModels { viewModelProviderFactory }
+    private val addEditNoteViewModel: AddEditNoteViewModel by viewModels()
     private lateinit var navController: NavController
 
     companion object {
