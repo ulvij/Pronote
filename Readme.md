@@ -30,7 +30,9 @@ Min API level is set to [21](https://android-arsenal.com/api?level=21#l21), so t
 
 - **Tech-stack**
     * [Kotlin](https://kotlinlang.org/)
-    * [Dagger](https://dagger.dev/) - dependency injection
+    * [Dependency Injection](https://developer.android.com/training/dependency-injection) 
+        * [Dagger Hilt](https://dagger.dev/hilt/) - Standard library to incorporate Dagger dependency injection into an Android application
+        * [Hilt ViewModel](https://developer.android.com/training/dependency-injection/hilt-jetpack) - DI for injecting ViewModel.
     * [RxJava](https://github.com/ReactiveX/RxJava)-[RxAndroid](https://github.com/ReactiveX/RxAndroid) - deal with reactive use cases
     * [Retrofit](https://square.github.io/retrofit/) - networking
     * [Android Jetpack](https://developer.android.com/jetpack)
@@ -54,13 +56,15 @@ Min API level is set to [21](https://android-arsenal.com/api?level=21#l21), so t
  
 ![architecture](https://user-images.githubusercontent.com/24237865/77502018-f7d36000-6e9c-11ea-92b0-1097240c8689.png)
 
+## [Dagger](https://dagger.dev/) DI version
+For old way of Dependency Injetion using Dagger2, see branch [di-with-dagger](https://github.com/ulvij/Pronote/tree/di-with-dagger)
 
 ## Find this useful?
 Support it by giving :star: for this repository
 
 ## License
 ```
-Designed and developed by 2020 ulvij (Ulvi Jabbarli)
+Designed and developed by ulvij (Ulvi Jabbarli)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
