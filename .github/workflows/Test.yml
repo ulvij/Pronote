@@ -37,8 +37,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
+      - name: Grant Permission to Execute
+        run: chmod +x gradlew
 
       - name: Instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
