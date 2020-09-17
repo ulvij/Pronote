@@ -35,7 +35,9 @@ jobs:
     name: Run Instrumentation Tests
     runs-on: macos-latest
     steps:
-      - name: Run instrumentation tests
+      - uses: actions/checkout@v2
+
+      - name: Instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
