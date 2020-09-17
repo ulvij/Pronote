@@ -30,3 +30,25 @@ jobs:
 
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
+
+  instrumentation-test:
+    name: Run Instrumentation Tests
+    runs-on: macos-latest
+    steps:
+      - name: Run instrumentation tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86
+          profile: Nexus 6
+          avd-name: test
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: ./gradlew connectedCheck
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v1
+        with:
+          name: reports
+          path: app/build/reports
+
