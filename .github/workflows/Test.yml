@@ -51,6 +51,7 @@ jobs:
           disable-animations: true
           script: ./gradlew connectedCheck
 
+
       - name: Upload Reports
         uses: actions/upload-artifact@v1
         with:
