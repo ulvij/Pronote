@@ -3,11 +3,12 @@ package com.ulvijabbarli.pronote.ui.main.notes
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.FtsOptions
 import com.ulvijabbarli.pronote.R
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.util.Event
 
-class NotesAdapter(var viewModel: NotesViewModel) :
+class NotesAdapter(private val clickListener: (Event<Note>) -> Unit) :
     RecyclerView.Adapter<NotesViewHolder>() {
 
     private val noteList = mutableListOf<Note>()
@@ -24,7 +25,7 @@ class NotesAdapter(var viewModel: NotesViewModel) :
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         holder.containerView.setOnClickListener {
-            viewModel.openNote(Event(noteList[position]))
+            clickListener(Event(noteList[position]))
         }
         holder.bind(noteList[position])
     }

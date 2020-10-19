@@ -28,20 +28,12 @@ import javax.inject.Inject
  * A simple [Fragment] subclass.
  */
 @AndroidEntryPoint
-class NotesFragment : Fragment() {
+class NotesFragment : Fragment(R.layout.fragment_notes) {
 
     private val notesViewModel: NotesViewModel by viewModels()
 
     private lateinit var navController: NavController
     private lateinit var notesAdapter: NotesAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_notes, container, false)
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,7 +60,7 @@ class NotesFragment : Fragment() {
     }
 
     private fun setUpNotesAdapter() {
-        notesAdapter = NotesAdapter(notesViewModel)
+        notesAdapter = NotesAdapter { notesViewModel.openNote(it) }
         recycler_view_notes.adapter = notesAdapter
     }
 
@@ -87,7 +79,7 @@ class NotesFragment : Fragment() {
 
         // note list observer
         notesViewModel.notes.observe(viewLifecycleOwner,
-            Observer { noteResource ->
+            { noteResource ->
                 if (noteResource != null) {
                     when (noteResource) {
                         is Resource.Loading -> {
@@ -107,7 +99,7 @@ class NotesFragment : Fragment() {
 
         // clear all notes observer
         notesViewModel.clearAllNotes.observe(viewLifecycleOwner,
-            Observer { clearNotesResponse ->
+            { clearNotesResponse ->
                 if (clearNotesResponse != null) {
                     when (clearNotesResponse) {
                         is Resource.Loading -> {
