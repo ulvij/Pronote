@@ -23,20 +23,13 @@ import kotlinx.android.synthetic.main.fragment_add_note.*
  * A simple [Fragment] subclass.
  */
 @AndroidEntryPoint
-class AddEditNoteFragment : Fragment() {
+class AddEditNoteFragment : Fragment(R.layout.fragment_add_note) {
 
     private val addEditNoteViewModel: AddEditNoteViewModel by viewModels()
     private lateinit var navController: NavController
 
     companion object {
         val TAG: String = AddEditNoteFragment::class.java.name
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_add_note, container, false)
     }
 
 
@@ -116,7 +109,7 @@ class AddEditNoteFragment : Fragment() {
 
         addEditNoteViewModel.noteDeleteEvent.observe(
             viewLifecycleOwner,
-            Observer { deleteNoteResource ->
+            { deleteNoteResource ->
                 if (deleteNoteResource != null) {
                     when (deleteNoteResource) {
                         is Resource.Success -> {
