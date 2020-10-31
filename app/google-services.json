@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "445825704122",
+    "firebase_url": "https://pronote-2d2b0.firebaseio.com",
+    "project_id": "pronote-2d2b0",
+    "storage_bucket": "pronote-2d2b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445825704122:android:402e547b1c4a20f036e283",
+        "android_client_info": {
+          "package_name": "com.ulvijabbarli.pronote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445825704122-rv2dqalp7qi93h6jsqo94ed2mub90j36.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ulvijabbarli.pronote",
+            "certificate_hash": "944e46b95efa86f9ceb3c3eccc5d91646e40fe52"
+          }
+        },
+        {
+          "client_id": "445825704122-sl4ho1hr7jk4fj8gv3vgbnrghlcilt5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRp9IJlJTziE2xlA7pSunpv923dID6HzQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445825704122-sl4ho1hr7jk4fj8gv3vgbnrghlcilt5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
