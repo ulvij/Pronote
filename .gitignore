@@ -76,3 +76,11 @@ lint/tmp/
 
 # DS store
 .DS_Store
+
+/keystore.properties
+/keystore.jks
+/keystore.b64
+/play_config.json
+/firebase_credentials.json
+/firebase_credentials.b64
+
