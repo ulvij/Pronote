@@ -3,8 +3,7 @@ package com.ulvijabbarli.pronote.ui
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -59,6 +58,8 @@ class AddEditNoteFragmentTest {
     fun createNewNote_success() {
         launchActivity()
 
+        closeSoftKeyboard()
+
         // open add note fragment and type not details
         onView(withId(R.id.float_add_note)).perform(click())
         onView(withId(R.id.text_note_title)).perform(typeText("New Note Title"))
@@ -76,6 +77,8 @@ class AddEditNoteFragmentTest {
     fun createEmptyNoteFields() {
         launchActivity()
 
+        closeSoftKeyboard()
+
         // open add note fragment and type not details
         onView(withId(R.id.float_add_note)).perform(click())
 
@@ -89,6 +92,8 @@ class AddEditNoteFragmentTest {
     @Test
     fun checkDeleteButtonVisibility_CreateNoteCase() {
         launchActivity()
+
+        closeSoftKeyboard()
 
         // open add note fragment
         onView(withId(R.id.float_add_note)).perform(click())
@@ -104,6 +109,8 @@ class AddEditNoteFragmentTest {
 
         launchActivity()
 
+        closeSoftKeyboard()
+
         // open note details page
         onView(withText("TITLE")).perform(click())
 
@@ -117,6 +124,8 @@ class AddEditNoteFragmentTest {
         notesRepository.saveNote(Note(id = 1, title = "TITLE", description = "DESC1")).blockingAwait()
 
         launchActivity()
+
+        closeSoftKeyboard()
 
         // open note details page
         onView(withText("TITLE")).perform(click())
@@ -138,6 +147,8 @@ class AddEditNoteFragmentTest {
         notesRepository.saveNote(Note(id = 1, title = "TITLE", description = "DESC")).blockingAwait()
 
         launchActivity()
+
+        closeSoftKeyboard()
 
         // open note details page
         onView(withText("TITLE")).perform(click())
