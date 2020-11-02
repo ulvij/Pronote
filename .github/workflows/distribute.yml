@@ -26,7 +26,7 @@ jobs:
       - name: Create Google Services Json file
         run: |
           echo "$GOOGLE_SERVICES" > google-services.b64
-          base64 -d -i google-services.b64 > google-services.json
+          base64 -d -i google-services.b64 > app/google-services.json
         env:
           GOOGLE_SERVICES: ${{secrets.GOOGLE_SERVICES_JSON_FILE}}
 
