@@ -78,6 +78,7 @@ lint/tmp/
 .DS_Store
 
 /app/google-services.json
+/app/google-services.b64
 /keystore.properties
 /app/keystore.jks
 /app/keystore.b64

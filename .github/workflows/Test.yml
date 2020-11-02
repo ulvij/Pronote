@@ -4,6 +4,8 @@ on:
     branches: [dev]
 
 jobs:
+
+
   test:
     name: Run Unit Tests
     runs-on: ubuntu-latest
@@ -30,6 +32,13 @@ jobs:
           KEYSTORE_KEY_PASSWORD: ${{secrets.KEYSTORE_KEY_PASSWORD}}
           KEYSTORE_STORE_PASSWORD: ${{secrets.KEYSTORE_STORE_PASSWORD}}
 
+      - name: Create Google Services Json file
+        run: |
+          echo "$GOOGLE_SERVICES" > google-services.b64
+          base64 -d -i google-services.b64 > google-services.json
+        env:
+          GOOGLE_SERVICES: ${{secrets.GOOGLE_SERVICES_JSON_FILE}}
+
       # Cache gradle
       - name: Cache Gradle and wrapper
         uses: actions/cache@v2
@@ -46,6 +55,7 @@ jobs:
 
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
+
 
   instrumentation-test:
     name: Run Instrumentation Tests
@@ -69,6 +79,13 @@ jobs:
           KEYSTORE_KEY_ALIAS: ${{secrets.KEYSTORE_KEY_ALIAS}}
           KEYSTORE_KEY_PASSWORD: ${{secrets.KEYSTORE_KEY_PASSWORD}}
           KEYSTORE_STORE_PASSWORD: ${{secrets.KEYSTORE_STORE_PASSWORD}}
+
+      - name: Create Google Services Json file
+        run: |
+          echo "$GOOGLE_SERVICES" > google-services.b64
+          base64 -d -i google-services.b64 > google-services.json
+        env:
+          GOOGLE_SERVICES: ${{secrets.GOOGLE_SERVICES_JSON_FILE}}
 
       - name: Instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
