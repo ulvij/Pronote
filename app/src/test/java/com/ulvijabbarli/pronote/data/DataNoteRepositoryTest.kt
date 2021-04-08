@@ -16,7 +16,6 @@ class DataNoteRepositoryTest {
 
     private lateinit var notesLocalDataSource: FakeDataSource
 
-
     // Class under test
     private lateinit var notesRepository: DefaultNoteRepository
 
