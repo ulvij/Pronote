@@ -2,8 +2,7 @@ package com.ulvijabbarli.pronote.data.source
 
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.source.local.NotesDataSource
-import io.reactivex.Completable
-import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,27 +11,23 @@ class DefaultNoteRepository @Inject constructor(
     private val notesDataSource: NotesDataSource
 ) : NoteRepository {
 
-    companion object {
-        val TAG = DefaultNoteRepository::class.qualifiedName
-    }
-
-    override fun getAllNote(): Flowable<MutableList<Note>> {
+    override fun getAllNote(): Flow<MutableList<Note>> {
         return notesDataSource.getAllNote()
     }
 
-    override fun getNote(id: Long): Flowable<Note> {
+    override fun getNote(id: Long): Flow<Note> {
         return notesDataSource.getNote(id)
     }
 
-    override fun saveNote(note: Note): Completable {
-        return notesDataSource.saveNote(note)
+    override suspend fun saveNote(note: Note) {
+        notesDataSource.saveNote(note)
     }
 
-    override fun deleteNote(id: Long): Completable {
-        return notesDataSource.deleteNote(id)
+    override suspend fun deleteNote(id: Long) {
+        notesDataSource.deleteNote(id)
     }
 
-    override fun deleteAllNote(): Completable {
-        return notesDataSource.deleteAllNote()
+    override suspend fun deleteAllNote() {
+        notesDataSource.deleteAllNote()
     }
 }

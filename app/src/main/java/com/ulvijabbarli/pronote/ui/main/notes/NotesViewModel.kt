@@ -1,23 +1,31 @@
 package com.ulvijabbarli.pronote.ui.main.notes
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
-import com.ulvijabbarli.pronote.data.source.NoteRepository
+import com.ulvijabbarli.pronote.ui.base.BaseViewModel
+import com.ulvijabbarli.pronote.ui.main.notes.usecase.DeleteAllNoteUseCase
+import com.ulvijabbarli.pronote.ui.main.notes.usecase.ObserveNotesUseCase
 import com.ulvijabbarli.pronote.util.Event
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.onEach
 
-class NotesViewModel @ViewModelInject constructor(var repository: NoteRepository) : ViewModel() {
+sealed class NotesState {
+    class ShowNotes(list: MutableList<Note>) : NotesState()
+}
 
-    private var _notes = MutableLiveData<Resource<List<Note>>>()
-    val notes = _notes as LiveData<Resource<List<Note>>>
+sealed class NotesEffect {
+    object DeletedAllNotes : NotesEffect()
+}
+
+class NotesViewModel @ViewModelInject constructor(
+    val observeNotesUseCase: ObserveNotesUseCase,
+    val deleteAllNoteUseCase: DeleteAllNoteUseCase
+) :
+    BaseViewModel<NotesState, NotesEffect>() {
 
     private var _clearAllNotes = MutableLiveData<Resource<Boolean>>()
     val clearAllNotes = _clearAllNotes as LiveData<Resource<Boolean>>
@@ -25,54 +33,16 @@ class NotesViewModel @ViewModelInject constructor(var repository: NoteRepository
     private var _openNoteDetail = MutableLiveData<Event<Note>>()
     val openNoteDetail = _openNoteDetail as LiveData<Event<Note>>
 
-    private var notesCompositeDisposable: CompositeDisposable = CompositeDisposable()
-
-    companion object {
-        val TAG = NotesViewModel::class.qualifiedName
-    }
-
     init {
-        Log.d(TAG, "Notes view model started")
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        notesCompositeDisposable.dispose()
-    }
-
-
-    fun loadNoteList() {
-        if (_notes.value == null) {
-            _notes.value = Resource.Loading
-            notesCompositeDisposable.add(repository.getAllNote()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { noteList ->
-                        _notes.value = Resource.Success(noteList ?: mutableListOf())
-                    },
-                    { error ->
-                        _notes.value = Resource.Error(error as Exception)
-                    }
-                ))
-        }
+        observeNotesUseCase.execute(Unit).filterNotNull()
+            .onEach { postState(NotesState.ShowNotes(it)) }
+            .launchNoLoading()
     }
 
     fun clearAllNotes() {
-        _clearAllNotes.value = Resource.Loading
-        notesCompositeDisposable.add(
-            repository.deleteAllNote()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        _clearAllNotes.value = Resource.Success(true)
-                    },
-                    { error ->
-                        _clearAllNotes.value = Resource.Error(error as Exception)
-                    }
-                )
-        )
+        deleteAllNoteUseCase.launch(Unit) {
+            onSuccess = { postEffect(NotesEffect.DeletedAllNotes) }
+        }
     }
 
     fun openNote(event: Event<Note>) {

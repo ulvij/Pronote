@@ -41,7 +41,6 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         setUpClickListeners()
         setUpNotesAdapter()
         setUpObservers()
-        notesViewModel.loadNoteList()
     }
 
     private fun setUpClickListeners() {

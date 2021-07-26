@@ -1,8 +1,10 @@
 package com.ulvijabbarli.pronote.data.source
 
 import com.ulvijabbarli.pronote.data.Note
+import com.ulvijabbarli.pronote.data.Resource
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 
 
 /**
@@ -10,14 +12,14 @@ import io.reactivex.Flowable
  */
 interface NoteRepository {
 
-    fun getAllNote(): Flowable<MutableList<Note>>
+    fun getAllNote(): Flow<MutableList<Note>>
 
-    fun getNote(id: Long): Flowable<Note>
+    fun getNote(id: Long): Flow<Note>
 
-    fun saveNote(note: Note): Completable
+    suspend fun saveNote(note: Note)
 
-    fun deleteNote(id: Long): Completable
+    suspend fun deleteNote(id: Long)
 
-    fun deleteAllNote(): Completable
+    suspend fun deleteAllNote()
 
 }

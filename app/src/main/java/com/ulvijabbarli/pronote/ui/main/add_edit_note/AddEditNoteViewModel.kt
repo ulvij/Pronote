@@ -5,16 +5,18 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
 import com.ulvijabbarli.pronote.data.source.NoteRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AddEditNoteViewModel @ViewModelInject constructor(
-    var repository: NoteRepository
+    private var repository: NoteRepository
 ) : ViewModel() {
 
     private var _noteUpdateEvent: MutableLiveData<Resource<Boolean>> = MutableLiveData()
@@ -29,8 +31,6 @@ class AddEditNoteViewModel @ViewModelInject constructor(
     var isNewNote: Boolean = false
     var currentNoteId: String? = null
 
-    var disposables: CompositeDisposable = CompositeDisposable()
-
     companion object {
         val TAG = AddEditNoteViewModel::class.qualifiedName
     }
@@ -39,35 +39,22 @@ class AddEditNoteViewModel @ViewModelInject constructor(
         Log.d(TAG, "Add Edit Note view model started")
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposables.dispose()
-    }
-
-
     fun start(noteId: String?) {
-        this.currentNoteId = noteId
-        if (noteId == null) {
-            // no need to retrieve note, it's a new note
-            isNewNote = true
-            return
-        }
+        viewModelScope.launch {
+            currentNoteId = noteId
+            if (noteId == null) {
+                // no need to retrieve note, it's a new note
+                isNewNote = true
+                return@launch
+            }
 
-        isNewNote = false
-        _note.value = Resource.Loading
-        disposables.add(
-            repository.getNote(noteId.toLong())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        _note.value = Resource.Success(it)
-                    },
-                    { error ->
-                        _note.value = Resource.Error(error as Exception)
-                    }
-                )
-        )
+            isNewNote = false
+            _note.value = Resource.Loading
+            when (val response = repository.getNote(noteId.toLong())) {
+                is Resource.Success -> _note.value = Resource.Success(response.data)
+                is Resource.Error -> _note.value = Resource.Error(response.exception)
+            }
+        }
     }
 
     fun saveNote(title: String, description: String?) {
@@ -85,66 +72,45 @@ class AddEditNoteViewModel @ViewModelInject constructor(
     }
 
     fun deleteNote() {
-        if (isNewNote || currentNoteId == null) {
-            _noteDeleteEvent.value =
-                Resource.Error(RuntimeException("deleteNote() was called but note is new."))
+        viewModelScope.launch {
+            if (isNewNote || currentNoteId == null) {
+                _noteDeleteEvent.value =
+                    Resource.Error(RuntimeException("deleteNote() was called but note is new."))
+            }
+            _noteDeleteEvent.value = Resource.Loading
+            when (val response = repository.deleteNote(currentNoteId!!.toLong())) {
+                is Resource.Success -> _noteDeleteEvent.value = Resource.Success(true)
+                is Resource.Error -> _noteDeleteEvent.value = Resource.Error(response.exception)
+            }
+
         }
-
-        _noteDeleteEvent.value = Resource.Loading
-
-        disposables.add(repository.deleteNote(currentNoteId!!.toLong())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    _noteDeleteEvent.value = Resource.Success(true)
-                },
-                {
-                    _noteDeleteEvent.value = Resource.Error(it as Exception)
-                }
-            ))
 
     }
 
 
     private fun insertNote(note: Note) {
-        _note.value = Resource.Loading
-
-        disposables.add(repository.saveNote(note)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    _noteUpdateEvent.value = Resource.Success(true)
-                },
-                { error ->
-                    _noteUpdateEvent.value = Resource.Error(error as Exception)
-                }
-            )
-        )
+        viewModelScope.launch {
+            _note.value = Resource.Loading
+            when (val response = repository.saveNote(note)) {
+                is Resource.Success -> _noteUpdateEvent.value = Resource.Success(true)
+                is Resource.Error -> _noteUpdateEvent.value = Resource.Error(response.exception)
+            }
+        }
     }
 
     private fun updateNote(note: Note) {
-        if (isNewNote || currentNoteId == null) {
-            _noteUpdateEvent.value =
-                Resource.Error(RuntimeException("updateNote() was called but note is new."))
+        viewModelScope.launch {
+            if (isNewNote || currentNoteId == null) {
+                _noteUpdateEvent.value =
+                    Resource.Error(RuntimeException("updateNote() was called but note is new."))
+            }
+
+            _note.value = Resource.Loading
+            when (val response = repository.saveNote(note)) {
+                is Resource.Success -> _noteUpdateEvent.value = Resource.Success(true)
+                is Resource.Error -> _noteUpdateEvent.value = Resource.Error(response.exception)
+            }
         }
-
-        _note.value = Resource.Loading
-
-        disposables.add(repository.saveNote(note)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    _noteUpdateEvent.value = Resource.Success(true)
-                },
-                { error ->
-                    _noteUpdateEvent.value = Resource.Error(error as Exception)
-                }
-            )
-        )
-
     }
 
 }
