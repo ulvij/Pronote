@@ -49,3 +49,4 @@ abstract class BaseFlowUseCase<P, R>(
         createFlow(params)
             .flowOn(executionContext)
             .catch { throw errorMapper.convert(it) }
+}

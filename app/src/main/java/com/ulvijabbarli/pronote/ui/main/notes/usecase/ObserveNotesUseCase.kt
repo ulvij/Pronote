@@ -11,7 +11,7 @@ import kotlin.coroutines.CoroutineContext
 class ObserveNotesUseCase(
     context: CoroutineContext,
     converter: ErrorConverter,
-    val repository: DefaultNoteRepository
+    private val repository: DefaultNoteRepository
 ) : BaseFlowUseCase<Unit, MutableList<Note>>(context, converter) {
 
     override fun createFlow(params: Unit): Flow<MutableList<Note>> = repository.getAllNote()

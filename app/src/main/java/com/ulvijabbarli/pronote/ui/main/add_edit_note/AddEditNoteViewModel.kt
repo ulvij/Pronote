@@ -1,7 +1,6 @@
 package com.ulvijabbarli.pronote.ui.main.add_edit_note
 
 import android.util.Log
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,13 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.ulvijabbarli.pronote.data.Note
 import com.ulvijabbarli.pronote.data.Resource
 import com.ulvijabbarli.pronote.data.source.NoteRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AddEditNoteViewModel @ViewModelInject constructor(
+@HiltViewModel
+class AddEditNoteViewModel @Inject constructor(
     private var repository: NoteRepository
 ) : ViewModel() {
 
@@ -50,10 +48,10 @@ class AddEditNoteViewModel @ViewModelInject constructor(
 
             isNewNote = false
             _note.value = Resource.Loading
-            when (val response = repository.getNote(noteId.toLong())) {
-                is Resource.Success -> _note.value = Resource.Success(response.data)
-                is Resource.Error -> _note.value = Resource.Error(response.exception)
-            }
+//            when (val response = repository.getNote(noteId.toLong())) {
+//                is Resource.Success -> _note.value = Resource.Success(response.data)
+//                is Resource.Error -> _note.value = Resource.Error(response.exception)
+//            }
         }
     }
 
@@ -78,10 +76,10 @@ class AddEditNoteViewModel @ViewModelInject constructor(
                     Resource.Error(RuntimeException("deleteNote() was called but note is new."))
             }
             _noteDeleteEvent.value = Resource.Loading
-            when (val response = repository.deleteNote(currentNoteId!!.toLong())) {
-                is Resource.Success -> _noteDeleteEvent.value = Resource.Success(true)
-                is Resource.Error -> _noteDeleteEvent.value = Resource.Error(response.exception)
-            }
+//            when (val response = repository.deleteNote(currentNoteId!!.toLong())) {
+//                is Resource.Success -> _noteDeleteEvent.value = Resource.Success(true)
+//                is Resource.Error -> _noteDeleteEvent.value = Resource.Error(response.exception)
+//            }
 
         }
 
@@ -91,10 +89,10 @@ class AddEditNoteViewModel @ViewModelInject constructor(
     private fun insertNote(note: Note) {
         viewModelScope.launch {
             _note.value = Resource.Loading
-            when (val response = repository.saveNote(note)) {
-                is Resource.Success -> _noteUpdateEvent.value = Resource.Success(true)
-                is Resource.Error -> _noteUpdateEvent.value = Resource.Error(response.exception)
-            }
+//            when (val response = repository.saveNote(note)) {
+//                is Resource.Success -> _noteUpdateEvent.value = Resource.Success(true)
+//                is Resource.Error -> _noteUpdateEvent.value = Resource.Error(response.exception)
+//            }
         }
     }
 
@@ -106,10 +104,10 @@ class AddEditNoteViewModel @ViewModelInject constructor(
             }
 
             _note.value = Resource.Loading
-            when (val response = repository.saveNote(note)) {
-                is Resource.Success -> _noteUpdateEvent.value = Resource.Success(true)
-                is Resource.Error -> _noteUpdateEvent.value = Resource.Error(response.exception)
-            }
+//            when (val response = repository.saveNote(note)) {
+//                is Resource.Success -> _noteUpdateEvent.value = Resource.Success(true)
+//                is Resource.Error -> _noteUpdateEvent.value = Resource.Error(response.exception)
+//            }
         }
     }
 

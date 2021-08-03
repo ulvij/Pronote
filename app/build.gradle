@@ -87,6 +87,10 @@ android {
 
         }
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 configurations.all {
@@ -148,7 +152,6 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$rootProject.daggerHiltAndroidVersion"
     implementation "com.google.dagger:hilt-android-testing:$rootProject.daggerHiltAndroidVersion"
     implementation "androidx.hilt:hilt-common:$rootProject.daggerHiltVersion"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.daggerHiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidVersion"
     kapt "androidx.hilt:hilt-compiler:$rootProject.daggerHiltVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.daggerHiltAndroidVersion"

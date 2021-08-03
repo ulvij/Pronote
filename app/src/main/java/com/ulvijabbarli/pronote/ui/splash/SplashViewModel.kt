@@ -1,29 +1,28 @@
 package com.ulvijabbarli.pronote.ui.splash
 
-import android.os.CountDownTimer
-import android.util.Log
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import javax.inject.Inject
 
-class SplashViewModel @ViewModelInject constructor(): ViewModel() {
+@HiltViewModel
+class SplashViewModel @Inject constructor() : ViewModel() {
 
     companion object {
         val TAG = SplashViewModel::class.qualifiedName
     }
 
     init {
-        Log.e(TAG, "Splash view model is working")
+        Timber.e(TAG, "Splash view model is working")
     }
 
     fun startTiming(openApp: () -> Unit) {
-        object : CountDownTimer(1000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-
-            }
-
-            override fun onFinish() {
-                openApp()
-            }
-        }.start()
+        viewModelScope.launch {
+            delay(1000)
+            openApp()
+        }
     }
 }

@@ -30,6 +30,8 @@ open class BaseViewModel<State, Effect> : ViewModel() {
     val effect: SingleLiveEvent<Effect>
         get() = _effect
 
+    val navigationCommands = SingleLiveEvent<NavigationCommand>()
+
     protected fun postState(state: State) {
         _state.value = state
     }
