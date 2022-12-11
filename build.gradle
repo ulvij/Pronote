@@ -40,7 +40,7 @@ ext {
     archLifecycleVersion = '2.2.0'
     androidxArchVersion = '2.1.0'
     navVersion = "2.3.0"
-    navVersionKtx = "2.3.0"
+    navVersionKtx = "2.5.3"
     roomVersion = '2.2.5'
 
     // dagger
