@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.4.0'
+    ext.kotlin_version = '1.7.22'
     ext.dagger_hilt_version = "2.28.3-alpha"
     ext.gradle_version = '4.1.0'
     repositories {
