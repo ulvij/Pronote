@@ -61,7 +61,7 @@ ext {
     androidXTestExtJUnitVersion = '1.1.2'
     androidXTestEspressoCoreVersion = '3.5.0'
     robolectricVersion = '4.3.1'
-    jUnitVersion = "4.12"
+    jUnitVersion = "4.13.2"
     truthVersion = "1.0.1"
     mockitoVersion = "2.27.0"
 
